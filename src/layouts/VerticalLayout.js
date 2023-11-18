@@ -15,12 +15,12 @@ const VerticalLayout = (props) => {
   // useEffect(() => {
   //   axios.get(URL).then(response => setMenuData(response.data))
   // }, [])
-  const role = localStorage?.getItem("role");
+  const rol = localStorage?.getItem("rol");
   let filteredNavigation = [];
 
-  if (role === "2") {
+  if (rol === "2") {
     filteredNavigation = navigation.slice(0, 2); // Obtener los primeros dos elementos del array
-  } else if (role === "1") {
+  } else if (rol === "1") {
     filteredNavigation = navigation; // Obtener el array completo
   }
   return (

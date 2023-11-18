@@ -1,16 +1,8 @@
-// ** React Imports
 import { Link, Navigate, useNavigate } from "react-router-dom";
-
-// ** Custom Hooks
 import { useSkin } from "@hooks/useSkin";
-
-// ** Icons Imports
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
-
-// ** Custom Components
 import InputPasswordToggle from "@components/input-password-toggle";
 import './styles/style.css'
-// ** Reactstrap Imports
 import {
   Row,
   Col,
@@ -21,8 +13,6 @@ import {
   Input,
   Button,
 } from "reactstrap";
-
-// ** form s
 import { Controller, useForm } from 'react-hook-form'
 
 // ** Illustrations Imports
@@ -32,11 +22,9 @@ import illustrationsDark from "@src/assets/images/pages/register-v2-dark.svg";
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
-import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import bdMuni from "../../api/bdMuni";
 
-// const URL = 'https://notify.grupogenera.pe/api/v1/register'
-const URL = 'https://notify.grupogenera.pe/api/v1/register'
 const Register = () => {
   const navigate = useNavigate()
   const { skin } = useSkin();
@@ -46,24 +34,46 @@ const Register = () => {
   const [respuestaMatch, setRespuestaMatch] = useState(false)
   const [passwordRe, setPasswordRe] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [options, setOptions] = useState()
+  const [dependencias, setDependencias] = useState()
+  const [cargo, setCargo] = useState({});
 
-  const submit = data => {
+  useEffect(() => {
+    bdMuni.get(`/v1/cargos-dependencias`)
+      .then(res => {
+        setDependencias(res.data)
+      })
+      .catch(err => console.log(err))
+  }, [])
+
+  useEffect(() => {
+    bdMuni.get(`/v1/cargos`)
+      .then(res => {
+        setOptions(res.data)
+      })
+      .catch(err => console.log(err))
+  }, [])
+
+
+
+  const submit = async (data) => {
     setRespuesta(false)
     if (data.password != data.password_re) {
       setRespuestaMatch(true)
     } else {
       setIsLoading(true)
       setRespuestaMatch(false)
-      axios.post(URL, data)
-        .then(res => {
-          setIsLoading(false)
-          setRespuesta(res.data)
-          const val = res.data
-          if (val != 'error de usuario') {
-            navigate('/validation')
-          }
-        })
-        .catch(err => null)
+
+      try {        
+        const response = await bdMuni.post('/register-admin', data)
+        const res = response.data
+        navigate('/login')
+        // console.log(res)
+      } catch (err) {
+        setIsLoading(false)
+        setRespuesta(res.data)
+      }
+
     }
 
 
@@ -73,9 +83,7 @@ const Register = () => {
   return (
     <div className="auth-wrapper auth-cover">
       <Row className="auth-inner m-0">
-        <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
-          <h2 className="brand-text text-primary ms-1">Genera</h2>
-        </Link>
+
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
             <img className="img-fluid" src={source} alt="Login Cover" />
@@ -87,7 +95,7 @@ const Register = () => {
           sm="12"
         >
           <Col className="px-xl-2 mx-auto" xs="12" sm="8" md="6" lg="12">
-            <img className="img_local" src={logo} alt="Logo" />
+            <img className="img_local" src={logo} alt="Logo" style={{ width: 100 }} />
 
             <CardTitle tag="h2" className="fw-bold mb-1 mt-2">
               Registrate
@@ -98,8 +106,119 @@ const Register = () => {
               className="auth-register-form mt-2"
               onSubmit={handleSubmit(submit)}
             >
+              <div className="mb-1">
+                <Label className="form-label" for="nombres" >
+                  Nombres
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='nombres'
+                  name='nombres'
 
+                  render={({ field }) => (
+                    <Input
+                      type="text"
+                      invalid={errors.nombres && true}
+                      {...field}
 
+                    />
+                  )}
+                />
+              </div>
+
+              <div className="mb-1">
+                <Label className="form-label" for="apellidos" >
+                  Apellidos
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='apellidos'
+                  name='apellidos'
+
+                  render={({ field }) => (
+                    <Input
+                      type="text"
+                      invalid={errors.apellidos && true}
+                      {...field}
+
+                    />
+                  )}
+                />
+              </div>
+              <div className="mb-1">
+                <label className="form-label" htmlFor="cargo">
+                  Cargo
+                </label>
+                <select
+                  className="form-select"
+                  id="cargo_id"
+                  {...register("cargo_id")}
+                >
+                  {options?.map((option) => (
+                    <option key={option.id} value={option.id}>
+                      {option.nombre_cargo}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-1">
+                <label className="form-label" htmlFor="dependencia">
+                  Dependencia
+                </label>
+                <select
+                  className="form-select"
+                  id="dependencia_id"
+                  {...register("dependencia_id")}
+                >
+                  {dependencias?.map((dependencia) => (
+                    <option key={dependencia.id} value={dependencia.id}>
+                      {dependencia.nombre_dependencia}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="mb-1">
+                <Label className="form-label" for="celular" >
+                  Celular
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='celular'
+                  name='celular'
+
+                  render={({ field }) => (
+                    <Input
+                      type="text"
+                      invalid={errors.celular && true}
+                      {...field}
+
+                    />
+                  )}
+                />
+              </div>
+              <div className="mb-1">
+                <Label className="form-label" for="dni" >
+                  DNI
+                </Label>
+                <Controller
+                  defaultValue=''
+                  control={control}
+                  id='dni'
+                  name='dni'
+
+                  render={({ field }) => (
+                    <Input
+                      type="text"
+                      invalid={errors.dni && true}
+                      {...field}
+
+                    />
+                  )}
+                />
+              </div>
               <div className="mb-1">
                 <Label className="form-label" for="email">
                   Email
@@ -111,6 +230,7 @@ const Register = () => {
                   name='email'
                   render={({ field }) => (
                     <Input
+                      type="email"
                       placeholder='user@gmail.com'
                       invalid={errors.email && true}
                       {...field}
@@ -162,7 +282,7 @@ const Register = () => {
               {respuesta ? <p className="local_color">Error de usuario</p> : null}
               {respuestaMatch ? <p className="local_color">Las contraseñas no coinciden</p> : null}
 
-              
+
               <Button color="primary" block disabled={isLoading}>
                 Registrar Cuenta
               </Button>
@@ -183,7 +303,7 @@ const Register = () => {
           </Col>
         </Col>
       </Row>
-    </div>
+    </div >
   );
 };
 

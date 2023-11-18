@@ -29,8 +29,8 @@ import "@styles/react/pages/page-authentication.scss";
 import './styles/style.css'
 import axios from "axios";
 import { useState } from "react";
+import bdMuni from "../../api/bdMuni";
 
-const URL = 'https://backend.alven-inmobiliaria.com.mx/api/login/'
 const Login = () => {
 
   const navigate = useNavigate()
@@ -41,20 +41,26 @@ const Login = () => {
 
   const [isError, setIsError] = useState(false)
 
-  const submit = data => {
-    axios.post(URL, data)
-      .then(res => {
-        localStorage.setItem('token', res?.data?.token)
-        localStorage.setItem('nombre', res?.data?.name)
-        localStorage.setItem('id', res?.data?.id_user)
-        localStorage.setItem('role', res?.data?.role_id)
-        navigate('/inventario')
+  const submit = async (data) => {
+    try {
+      const response = await bdMuni.post('/login', data);  // Reemplaza '/tu-ruta-api' con la ruta real de tu API      
+      const res = response.data;      
+      localStorage.setItem('token', res?.api_token);
+      localStorage.setItem('rol', res?.rol);
+      localStorage.setItem('nombres', res?.nombres);
+      localStorage.setItem('apellidos', res?.apellidos);
+      localStorage.setItem('cargo', res?.cargo);
+      setIsError(false)
+      navigate('/tickets')
 
-      })
-      .catch(err => {
-        localStorage.setItem('token', '')
-        setIsError(true)
-      })
+    }
+    catch (err) {
+      localStorage.setItem('token', '');
+      localStorage.setItem('rol', '');
+      localStorage.setItem('nombres', '');
+      localStorage.setItem('apellidos', '');
+      setIsError(true)
+    }
   }
 
   return (
@@ -62,7 +68,7 @@ const Login = () => {
       <Row className="auth-inner m-0">
         <Link className="brand-logo" to="/" onClick={(e) => e.preventDefault()}>
 
-          
+
 
         </Link>
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
@@ -76,13 +82,13 @@ const Login = () => {
           sm="12"
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
-            <img className="img_local" src={logo} alt="Logo" />
+            <img className="img_local" src={logo} alt="Logo" style={{ width: 100 }} />
 
             <CardTitle tag="h2" className="fw-bold mb-1 mt-2">
-              Bienvenido a Alven Inmobiliaria ! 👋
+              Bienvenido al Intranet de la MDPM
             </CardTitle>
             <CardText className="mb-2">
-              Porfavor ingresa tu usuario y contraseña
+              Porfavor ingrese tu usuario y contraseña
             </CardText>
             <Form
               className="auth-login-form mt-2"
@@ -155,12 +161,12 @@ const Login = () => {
                 Ingresar
               </Button>
             </Form>
-            {/* <p className="text-center mt-2">
+            <p className="text-center mt-2">
               <span className="me-25">Eres nuevo en la plataforma?</span>
               <Link to="/register">
                 <span>Crea una cuenta</span>
               </Link>
-            </p> */}
+            </p>
 
           </Col>
         </Col>
