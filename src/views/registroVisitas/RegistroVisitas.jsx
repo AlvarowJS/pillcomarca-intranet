@@ -35,7 +35,7 @@ const RegistroVisitas = () => {
         nombre: '',
         apellidos: '',
         dni: '',
-        persona: '',
+        // persona: '',
         asunto: '',
         // hora_ingreso: '',
         hora_salida: ''

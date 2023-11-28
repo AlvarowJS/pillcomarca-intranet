@@ -151,8 +151,7 @@ const FormVisita = ({
                     <div className="form-group mx-4 mb-2">
                         <label htmlFor="asunto">Asunto</label>
                         <textarea type="text" className="form-control" id="asunto"
-                            {...register('asunto')}
-                            required
+                            {...register('asunto')}                            
                         />
                     </div>
                     <div className="form-group mx-4 mb-2">
@@ -193,7 +192,6 @@ const FormVisita = ({
                         <label htmlFor="hora_salida">Hora Salida</label>
                         <input type="time" className="form-control" id="hora_salida"
                             {...register('hora_salida')}
-                            required
                         />
                     </div>
 
