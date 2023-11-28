@@ -51,7 +51,7 @@ const AuthGuard = ({ children }) => {
     })
       .then(res => {
         setMyRol(res?.data?.role_id)
-        const rol = res?.data?.role?.role_num
+        const rol = res?.data?.role?.role_number
         
         if (!token) {
           // navigate("/login");
