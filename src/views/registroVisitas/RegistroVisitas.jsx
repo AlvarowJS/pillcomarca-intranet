@@ -31,7 +31,7 @@ const RegistroVisitas = () => {
 
     const { handleSubmit, control, register, reset, setError, formState: { errors } } = useForm()
     const defaultValuesForm = {
-        fecha: '',
+        // fecha: '',
         nombre: '',
         apellidos: '',
         dni: '',
