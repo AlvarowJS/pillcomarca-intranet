@@ -13,8 +13,8 @@ import PublicRoute from "@components/routes/PublicRoute";
 
 // ** Utils
 import { isObjEmpty } from "@utils";
-import DocumentosGestion from "../../views/documentosGestion/documentosGestion";
-import DocumentosNormativa from "../../views/documentosNormativa/documentosNormativa";
+import DocumentosGestion from "../../views/documentosGestion/DocumentosGestion";
+import DocumentosNormativa from "../../views/documentosNormativa/DocumentosNormativa";
 import Tickets from "../../views/tickets/Tickets";
 import Noticias from "../../views/noticias/Noticias";
 import bdMuni from "../../api/bdMuni";
