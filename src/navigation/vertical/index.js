@@ -1,4 +1,4 @@
-import { File, Tag, FileText, BarChart, Table } from "react-feather";
+import { File, Tag, FileText, BarChart, Table, Edit } from "react-feather";
 
 export default [
   {
@@ -25,5 +25,11 @@ export default [
     icon: <Table size={20} />,
     navLink: "/noticias",
   },
+  {
+    id: "Registro",
+    title: "Registro Visitas",
+    icon: <Edit size={20} />,
+    navLink: "/registro-visitas",
+  }
 ];
 

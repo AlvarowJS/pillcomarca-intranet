@@ -1,5 +1,5 @@
 // ** React Imports
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Fragment, lazy } from "react";
 import { Route, Navigate, useNavigate } from "react-router-dom";
@@ -17,6 +17,8 @@ import DocumentosGestion from "../../views/documentosGestion/documentosGestion";
 import DocumentosNormativa from "../../views/documentosNormativa/documentosNormativa";
 import Tickets from "../../views/tickets/Tickets";
 import Noticias from "../../views/noticias/Noticias";
+import bdMuni from "../../api/bdMuni";
+import RegistroVisitas from "../../views/registroVisitas/RegistroVisitas";
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
 
@@ -35,33 +37,75 @@ const DefaultRoute = "/login";
 const Error = lazy(() => import("../../views/Error"));
 
 const AuthGuard = ({ children }) => {
-  const navigate = useNavigate();
 
+  const [myRol, setMyRol] = useState()
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const rol = localStorage.getItem("rol");
-    
+    const objToken = { token: token}
 
-    if (!token) {
-      
-      navigate("/login");
-    } else {
-      // Aquí debe validar su token con su servidor para asegurarse de que es válido
-      // Si el token no es válido, llame a "navigate" para redirigir al usuario a la página de inicio de sesión
-      if(rol === "1"){
-        console.log("entro aca 1")
-      } else if(rol === "2") { 
-        console.log("entro aca 2")       
-        const restrictedRoutes = ["/tickets"];        
-        if (restrictedRoutes.includes(window.location.pathname)) {
-          navigate("/error"); 
+    bdMuni.post('/token-auth',objToken, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => {
+        setMyRol(res?.data?.role_id)
+        const rol = res?.data?.role?.role_num
+        
+        if (!token) {
+          // navigate("/login");
+        } else {
+          // Aquí debe validar su token con su servidor para asegurarse de que es válido
+          // Si el token no es válido, llame a "navigate" para redirigir al usuario a la página de inicio de sesión
+          if (rol == "1") {
+          } else if (rol == "2") {
+            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias"];
+            if (restrictedRoutes.includes(window.location.pathname)) {
+              navigate("/error");
+            }
+          } else if (rol == "7"){
+            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa","noticias"];
+            if (restrictedRoutes.includes(window.location.pathname)) {
+              navigate("/error");
+            }
+          }
+          else {
+            navigate("/login")
+          }
         }
-      }
-      else{
-        navigate("/login")
-      }
-    }
-  }, [navigate]);
+        
+        
+      })
+      .catch(err => console.log(err))
+      
+  }, [])
+
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   const rol = localStorage.getItem("rol");
+
+  //   console.log(myRol, "234234")
+
+  //   if (!token) {
+
+  //     navigate("/login");
+  //   } else {
+  //     // Aquí debe validar su token con su servidor para asegurarse de que es válido
+  //     // Si el token no es válido, llame a "navigate" para redirigir al usuario a la página de inicio de sesión
+  //     if (rol === "1") {
+  //     } else if (rol === "2") {
+  //       const restrictedRoutes = ["/tickets"];
+  //       if (restrictedRoutes.includes(window.location.pathname)) {
+  //         navigate("/error");
+  //       }
+  //     }
+  //     else {
+  //       navigate("/login")
+  //     }
+  //   }
+  // }, [navigate]);
 
   return <LayoutWrapper>{children}</LayoutWrapper>;
 };
@@ -93,7 +137,11 @@ const Routes = [
     element: <AuthGuard><Noticias /></AuthGuard>,
 
   },
+  {
+    path: "/registro-visitas",
+    element: <AuthGuard><RegistroVisitas /></AuthGuard>,
 
+  },
   {
     path: "/error",
     element: <Error />,

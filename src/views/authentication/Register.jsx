@@ -2,6 +2,8 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useSkin } from "@hooks/useSkin";
 import { Facebook, Twitter, Mail, GitHub } from "react-feather";
 import InputPasswordToggle from "@components/input-password-toggle";
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 import './styles/style.css'
 import {
   Row,
@@ -24,6 +26,9 @@ import illustrationsDark from "@src/assets/images/pages/register-v2-dark.svg";
 import "@styles/react/pages/page-authentication.scss";
 import { useEffect, useState } from "react";
 import bdMuni from "../../api/bdMuni";
+
+const MySwal = withReactContent(Swal)
+
 
 const Register = () => {
   const navigate = useNavigate()
@@ -64,14 +69,21 @@ const Register = () => {
       setIsLoading(true)
       setRespuestaMatch(false)
 
-      try {        
-        const response = await bdMuni.post('/register-admin', data)
-        const res = response.data
+      try {
+        const response = await bdMuni.post('/register-user', data)
+        // const res = response.data
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Registro Completado',
+          showConfirmButton: false,
+          timer: 1500
+        })
         navigate('/login')
         // console.log(res)
       } catch (err) {
         setIsLoading(false)
-        setRespuesta(res.data)
+        setRespuesta(response.data)
       }
 
     }
