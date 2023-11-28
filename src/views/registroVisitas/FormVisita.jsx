@@ -29,11 +29,14 @@ const FormVisita = ({
     }, [])
 
     useEffect(() => {
-        intervalRef.current = setInterval(() => {
-          setCurrentTime(new Date().toLocaleTimeString());
+        const intervalRef = setInterval(() => {
+          setCurrentTime(
+            new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+          );
         }, 1000);
+    
         return () => {
-          clearInterval(intervalRef.current);
+          clearInterval(intervalRef);
         };
       }, []);
 

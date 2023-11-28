@@ -24,7 +24,10 @@ const RegistroVisitas = () => {
     const [nombre, setNombre] = useState()
     const [apellidos, setApellidos] = useState()
     const [datosUser, setDatosUser] = useState()
-    const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+    // const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString());
+    const [currentTime, setCurrentTime] = useState(
+        new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false })
+      );
 
     const { handleSubmit, control, register, reset, setError, formState: { errors } } = useForm()
     const defaultValuesForm = {
@@ -33,7 +36,6 @@ const RegistroVisitas = () => {
         apellidos: '',
         dni: '',
         persona: '',
-        oficina: '',
         asunto: '',
         hora_ingreso: '',
         hora_salida: ''
@@ -89,7 +91,7 @@ const RegistroVisitas = () => {
             .then(res => {
                 reset(defaultValuesForm)
                 setApellidos('')
-                setNombre('')
+                setNombre('')                
                 setEstado(true)
                 Swal.fire({
                     position: 'center',
