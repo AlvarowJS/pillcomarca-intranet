@@ -47,6 +47,7 @@ const Login = () => {
       const res = response.data;      
       localStorage.setItem('token', res?.api_token);
       localStorage.setItem('rol', res?.rol);
+      localStorage.setItem('idu', res?.user);
       localStorage.setItem('nombres', res?.nombres);
       localStorage.setItem('apellidos', res?.apellidos);
       localStorage.setItem('cargo', res?.cargo);
@@ -57,8 +58,10 @@ const Login = () => {
     catch (err) {
       localStorage.setItem('token', '');
       localStorage.setItem('rol', '');
+      localStorage.setItem('idu', res?.user);
       localStorage.setItem('nombres', '');
       localStorage.setItem('apellidos', '');
+      localStorage.setItem('cargo', '');
       setIsError(true)
     }
   }
