@@ -21,6 +21,7 @@ import bdMuni from "../../api/bdMuni";
 import RegistroVisitas from "../../views/registroVisitas/RegistroVisitas";
 import Convocatoria from "../../views/convocatoria/Convocatoria";
 import Intervencion from "../../views/intervencion/Intervencion";
+import Directorio from "../../views/directorio/Directorio";
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
 
@@ -152,6 +153,11 @@ const Routes = [
   {
     path: "/convocatorias",
     element: <AuthGuard><Convocatoria /></AuthGuard>,
+
+  },
+  {
+    path: "/directorio",
+    element: <AuthGuard><Directorio /></AuthGuard>,
 
   },
   {
