@@ -10,9 +10,10 @@ const URLSIMPLE = '/v1/simple-directorios'
 const URLDIRECTORIO = '/v1/update-directorios'
 import FormDirectorio from './FormDirectorio';
 import TablaDirectorio from './TablaDirectorio';
-const token = localStorage.getItem('token')
 
 const Directorio = () => {
+    const token = localStorage.getItem('token')
+
     const [data, setData] = useState()
     const [search, setSearch] = useState()
     const [filter, setFilter] = useState()
@@ -71,7 +72,7 @@ const Directorio = () => {
         f.append('correo', data.correo)
         f.append('cargo', data.cargo)
         f.append('dependencia', data.dependencia)
-        f.append('foto', foto)        
+        f.append('foto', foto)
         bdMuni.post(URL, f, getAuthHeaders())
             .then(res => {
                 reset(defaulValuesForm)
