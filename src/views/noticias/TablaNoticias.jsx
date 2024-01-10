@@ -29,12 +29,14 @@ const TablaNoticias = ({ updateNoticiaById, getData, setCurrentPage, currentPage
             sortable: true,
             name: 'TITULO',
             minWidth: '100px',
+            maxWidth: '150px',
             selector: row => row?.titulo
         },
         {
             sortable: true,
             name: 'NOTA DE PRENSA',
             minWidth: '155px',
+            maxWidth: '200px',
             selector: row => row?.nota
         },
         {

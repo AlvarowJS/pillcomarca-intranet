@@ -1,4 +1,4 @@
-import { File, Tag, FileText, BarChart, Table, Edit } from "react-feather";
+import { File, Tag, FileText, BarChart, Table, Edit, UserMinus } from "react-feather";
 
 export default [
   {
@@ -30,6 +30,18 @@ export default [
     title: "Registro Visitas",
     icon: <Edit size={20} />,
     navLink: "/registro-visitas",
+  },
+  {
+    id: "Intervencion",
+    title: "Intervenciones",
+    icon: <Edit size={20} />,
+    navLink: "/intervenciones",
+  },
+  {
+    id: "Convocatorias",
+    title: "Convocatorias",
+    icon: <UserMinus size={20} />,
+    navLink: "/convocatorias",
   }
 ];
 

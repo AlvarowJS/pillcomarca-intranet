@@ -51,7 +51,6 @@ const Noticias = () => {
     setFormArray(updatedFormData);
   };
 
-  console.log(formArray)
   const toggle = () => {
     setModal(!modal)
     if (objUpdate !== undefined) {
@@ -182,7 +181,7 @@ const Noticias = () => {
         <Row>
           <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
             <Button className='mt-sm-0 mt-1' color='primary' onClick={toggle}>
-              Registrar Visita
+              Registrar Noticia
             </Button>
           </Col>
         </Row>

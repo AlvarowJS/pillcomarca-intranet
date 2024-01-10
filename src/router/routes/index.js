@@ -19,6 +19,8 @@ import Tickets from "../../views/tickets/Tickets";
 import Noticias from "../../views/noticias/Noticias";
 import bdMuni from "../../api/bdMuni";
 import RegistroVisitas from "../../views/registroVisitas/RegistroVisitas";
+import Convocatoria from "../../views/convocatoria/Convocatoria";
+import Intervencion from "../../views/intervencion/Intervencion";
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
 
@@ -42,9 +44,9 @@ const AuthGuard = ({ children }) => {
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const objToken = { token: token}
+    const objToken = { token: token }
 
-    bdMuni.post('/token-auth',objToken, {
+    bdMuni.post('/token-auth', objToken, {
       headers: {
         Authorization: `Bearer ${token}`
       }
@@ -52,7 +54,7 @@ const AuthGuard = ({ children }) => {
       .then(res => {
         setMyRol(res?.data?.role_id)
         const rol = res?.data?.role?.role_number
-        
+
         if (!token) {
           // navigate("/login");
         } else {
@@ -64,8 +66,8 @@ const AuthGuard = ({ children }) => {
             if (restrictedRoutes.includes(window.location.pathname)) {
               navigate("/error");
             }
-          } else if (rol == "7"){
-            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa","noticias"];
+          } else if (rol == "7") {
+            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias"];
             if (restrictedRoutes.includes(window.location.pathname)) {
               navigate("/error");
             }
@@ -74,11 +76,11 @@ const AuthGuard = ({ children }) => {
             navigate("/login")
           }
         }
-        
-        
+
+
       })
       .catch(err => console.log(err))
-      
+
   }, [])
 
 
@@ -140,6 +142,16 @@ const Routes = [
   {
     path: "/registro-visitas",
     element: <AuthGuard><RegistroVisitas /></AuthGuard>,
+
+  },
+  {
+    path: "/intervenciones",
+    element: <AuthGuard><Intervencion /></AuthGuard>,
+
+  },
+  {
+    path: "/convocatorias",
+    element: <AuthGuard><Convocatoria /></AuthGuard>,
 
   },
   {
