@@ -13,7 +13,6 @@ import TablaDirectorio from './TablaDirectorio';
 
 const Directorio = () => {
     const token = localStorage.getItem('token')
-
     const [data, setData] = useState()
     const [search, setSearch] = useState()
     const [filter, setFilter] = useState()
