@@ -1,8 +1,13 @@
 import React from 'react'
+import TicketUser from './TicketUser'
+import TicketAdmin from './TicketAdmin'
 
 const Tickets = () => {
   return (
-    <div>Tickets</div>
+    <>
+      <TicketUser/>
+      <TicketAdmin/>
+    </>
   )
 }
 
