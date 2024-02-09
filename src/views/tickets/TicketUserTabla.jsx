@@ -1,7 +1,7 @@
-import React from 'react'
-import DataTable from 'react-data-table-component'
-import { Edit, Trash } from 'react-feather'
-import { Card } from 'reactstrap'
+import React from 'react';
+import DataTable from 'react-data-table-component';
+import { Edit, Trash, Clock, CheckCircle, Activity } from 'react-feather'; // Importa los iconos necesarios
+import { Card,Badge } from 'reactstrap';
 
 const TicketUserTabla = ({
     data,
@@ -25,21 +25,45 @@ const TicketUserTabla = ({
             sortable: true,
             name: 'Estado',
             minWidth: '50px',
-            selector: row => row?.estado
+            cell: row => {
+                // Función para devolver el elemento correspondiente según el estado del ticket
+                switch (row?.estado) {
+                    case 1:
+                        return (
+                            <Badge color='light-primary'>
+                                En Espera
+                            </Badge>
+                        );
+                    case 2:
+                        return (
+                            <Badge color='light-warning'>
+                                Atendiendose
+                            </Badge>
+                        );
+                    case 3:
+                        return (
+                            <Badge color='light-success'>
+                                Terminado
+                            </Badge>
+                        );
+                    default:
+                        return (
+                            <Badge color='light-danger'>
+                                En Borrador
+                            </Badge>
+                        );
+                }
+            }
         },
+        
+        
+        
         {
             sortable: true,
             name: 'Fecha',
             minWidth: '50px',
-            selector: row => row?.correo
+            selector: row => row?.fecha
         },
-        {
-            sortable: true,
-            name: 'Celular',
-            minWidth: '50px',
-            selector: row => row?.cel
-
-        },      
         {
             name: 'Acciones',
             sortable: true,
@@ -49,19 +73,17 @@ const TicketUserTabla = ({
             cell: row => {
                 return (
                     <div className='d-flex gap-1 my-1'>
-
                         <button className='btn btn-warning'
                             onClick={() => actualizarTicketId(row?.id)}
                         >
                             <Edit />
                         </button>
-                
                     </div>
-                )
+                );
             }
         }
+    ];
 
-    ]
     return (
         <>
             <Card className='mt-2'>
@@ -71,11 +93,10 @@ const TicketUserTabla = ({
                     className='react-datatable'
                     columns={columns}
                     data={data}
-
                 />
             </Card>
         </>
-    )
+    );
 }
 
-export default TicketUserTabla
+export default TicketUserTabla;

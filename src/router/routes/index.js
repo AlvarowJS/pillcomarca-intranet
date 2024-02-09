@@ -73,6 +73,12 @@ const AuthGuard = ({ children }) => {
               navigate("/error");
             }
           }
+          else if (rol == "6") {
+            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias"];
+            if (restrictedRoutes.includes(window.location.pathname)) {
+              navigate("/error");
+            }
+          }
           else {
             navigate("/login")
           }
