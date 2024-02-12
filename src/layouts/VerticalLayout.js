@@ -24,7 +24,10 @@ const VerticalLayout = (props) => {
     filteredNavigation = [navigation[0], navigation[4]]
   } else if (rol === "1") {
     filteredNavigation = navigation; // Obtener el array completo
+  } else if(rol == "8" || rol == "6" == rol == "5" || rol == "4" == rol == "3" || rol == "2"  ){
+    filteredNavigation = [navigation[0]]
   }
+
   return (
     <Layout menuData={filteredNavigation} {...props}>
       <Outlet />

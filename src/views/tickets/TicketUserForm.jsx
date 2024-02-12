@@ -30,13 +30,10 @@ const TicketUserForm = ({
                 <form onSubmit={handleSubmit(submit)}>
                     <div className='form-group my-2'>
                         <label htmlFor="">Detalle</label>
-                        <input
-                        className="form-control"
-                        type="text"
-                        placeholder='Ingrese el detalle'
-                        {...register('detalle')}
+                        <textarea type="text" className="form-control" id="nota"
+                            {...register('detalle')}
                         />
-                        
+
                     </div>
                     <div className='form-group my-2'>
                         <label htmlFor="hora">Hora</label>
@@ -45,7 +42,7 @@ const TicketUserForm = ({
                             className="form-control"
                             id="hora"
                             value={horaActual}
-                            {...register('hora')}
+                            disabled
                         />
                     </div>
                     <div className='form-group my-2'>

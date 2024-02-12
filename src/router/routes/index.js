@@ -57,7 +57,7 @@ const AuthGuard = ({ children }) => {
         const rol = res?.data?.role?.role_number
 
         if (!token) {
-          // navigate("/login");
+          navigate("/login");
         } else {
           // Aquí debe validar su token con su servidor para asegurarse de que es válido
           // Si el token no es válido, llame a "navigate" para redirigir al usuario a la página de inicio de sesión
@@ -80,7 +80,10 @@ const AuthGuard = ({ children }) => {
             }
           }
           else {
-            navigate("/login")
+            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias"];
+            if (restrictedRoutes.includes(window.location.pathname)) {
+              navigate("/error");
+            }
           }
         }
 

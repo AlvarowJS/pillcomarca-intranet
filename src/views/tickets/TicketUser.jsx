@@ -5,6 +5,10 @@ import bdMuni from '../../api/bdMuni';
 import TicketUserForm from './TicketUserForm';
 import { useForm } from 'react-hook-form';
 
+// swal
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 // Apis
 const URL = '/v1/ticket';
 const URLUSER = '/v1/ticket-user/';
@@ -24,9 +28,7 @@ const TicketUser = () => {
     });
     const defaultValuesForm = {
         detalle: '',
-        hora: '',
-        fecha: '',
-        urgencia: '',
+        urgencia: ''
         // Quitamos la propiedad user_id del objeto por que lo vamos a asignar automáticamente
     };
 
@@ -55,21 +57,37 @@ const TicketUser = () => {
                 console.error('Error fetching ticket details:', err);
             });
     };
+    const crearTicket = data => {
+        bdMuni.post(URL, data, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then(res => {
+                setRefresh(true)                
+                reset(defaultValuesForm)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Ticket creado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Porfavor espere a que se atiende su ticket',
+                    showConfirmButton: false,
+                })
 
-    const submit = (formData) => {
-        console.log(formData,"actual")
-        // Mapeo de la urgencia a valores específicos
-        if (formData.urgencia === 'normal') {
-            formData.urgencia = 1;
-        } else if (formData.urgencia === 'urgente') {
-            formData.urgencia = 2;
-        }
+            })
+    }
 
-        // Agregar el ID del usuario automáticamente
-        formData.user_id = idu;
-
-        // Aquí puedes realizar el envío de los datos del formulario al backend
-        console.log('Datos del formulario:', formData);
+    const submit = (data) => {
+        data.user_id = idu;
+        crearTicket(data)
     };
 
     return (
@@ -93,7 +111,8 @@ const TicketUser = () => {
                 toggle={toggle}
                 modal={modal}
                 setModal={setModal}
-                handleSubmit={handleSubmit(submit)}
+                submit={submit}
+                handleSubmit={handleSubmit}
                 control={control}
                 register={register}
                 reset={reset}

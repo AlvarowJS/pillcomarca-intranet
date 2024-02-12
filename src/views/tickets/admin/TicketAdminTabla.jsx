@@ -1,11 +1,10 @@
-import React from 'react';
+import React from 'react'
 import DataTable from 'react-data-table-component';
 import { Edit, Trash, Clock, CheckCircle, Activity } from 'react-feather'; // Importa los iconos necesarios
-import { Card,Badge } from 'reactstrap';
+import { Card, Badge } from 'reactstrap';
 
-const TicketUserTabla = ({
-    data,
-    actualizarTicketId
+const TicketAdminTabla = ({
+    data
 }) => {
     const columns = [
         {
@@ -20,7 +19,7 @@ const TicketUserTabla = ({
             name: 'Detalle',
             minWidth: '25px',
             selector: row => row?.detalle,
-            cell: row=>{
+            cell: row => {
                 return (
                     <div>
                         {row?.detalle}
@@ -62,12 +61,12 @@ const TicketUserTabla = ({
                 }
             }
         },
-        
+
         {
             sortable: true,
             name: 'Hora',
             minWidth: '50px',
-            cell: row=>{
+            cell: row => {
                 return (
                     <div>
                         {row?.hora}
@@ -75,12 +74,12 @@ const TicketUserTabla = ({
                 )
             }
         },
-        
+
         {
             sortable: true,
             name: 'Fecha',
             minWidth: '50px',
-            cell: row=>{
+            cell: row => {
                 return (
                     <div>
                         {row?.fecha && new Date(row.fecha).toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' })}
@@ -89,9 +88,20 @@ const TicketUserTabla = ({
                 )
             }
         },
-      
-    ];
+        {
+            sortable: true,
+            name: 'Acciones',
+            minWidth: '50px',
+            cell: row => {
+                return (
+                    <div>
+                        <button className='btn btn-info'>Atender Ticket</button>
 
+                    </div>
+                )
+            }
+        },
+    ];
     return (
         <>
             <Card className='mt-2'>
@@ -104,7 +114,7 @@ const TicketUserTabla = ({
                 />
             </Card>
         </>
-    );
+    )
 }
 
-export default TicketUserTabla;
+export default TicketAdminTabla
