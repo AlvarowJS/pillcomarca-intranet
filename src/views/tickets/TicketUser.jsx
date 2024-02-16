@@ -12,6 +12,7 @@ const MySwal = withReactContent(Swal)
 // Apis
 const URL = '/v1/ticket';
 const URLUSER = '/v1/ticket-user/';
+const URLORDEN = '/v1/ticket-orden/'
 
 const TicketUser = () => {
     const token = localStorage.getItem('token');
@@ -19,6 +20,7 @@ const TicketUser = () => {
     const [data, setData] = useState([]);
     const [refresh, setRefresh] = useState(false);
     const [modal, setModal] = useState(false);
+    const [ordenUser, setOrdenUser] = useState(0)
 
     const { handleSubmit, control, register, reset } = useForm();
     const getAuthHeaders = () => ({
@@ -46,6 +48,17 @@ const TicketUser = () => {
                 console.error('Error fetching user tickets:', err);
             });
     }, [refresh]);
+    useEffect(() => {
+        bdMuni.get(`${URLORDEN}${idu}`, getAuthHeaders())
+            .then(res => {
+                setOrdenUser(res.data)
+            })
+            .catch(err => {
+                setOrdenUser(0)
+            })
+
+    }, [])
+
 
     const actualizarTicketId = (id) => {
         bdMuni.get(`${URL}/${id}`, getAuthHeaders())
@@ -64,7 +77,8 @@ const TicketUser = () => {
             }
         })
             .then(res => {
-                setRefresh(true)                
+                toggle.call()
+                setRefresh(true)
                 reset(defaultValuesForm)
                 Swal.fire({
                     position: 'center',
@@ -96,7 +110,12 @@ const TicketUser = () => {
                 <Col sm='6'>
                     <h3>Mis Tickets</h3>
                 </Col>
-                <Col sm='3'></Col>
+                <Col sm='3'>
+                    {
+                        ordenUser == 0 ? "" :
+                            `Hay ${ordenUser?.orden} Atendiendose <br />porfavor espere`
+                    }
+                </Col>
                 <Col sm='3'>
                     <Button onClick={toggle} color='primary'>
                         Solicitar Soporte

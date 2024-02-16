@@ -4,7 +4,7 @@ import { Edit, Trash, Clock, CheckCircle, Activity } from 'react-feather'; // Im
 import { Card, Badge } from 'reactstrap';
 
 const TicketAdminTabla = ({
-    data
+    data, atenderTicket, finalizarTicket
 }) => {
     const columns = [
         {
@@ -74,7 +74,29 @@ const TicketAdminTabla = ({
                 )
             }
         },
+        {
+            sortable: true,
+            name: 'Urgencia',
+            minWidth: '50px',
+            cell: row => {
+                return (
+                    <>
+                        {
+                            row?.urgencia == 1 ?
+                                <>
+                                    Normal
+                                </>
+                                :
+                                <>
+                                    Urgente
+                                </>
 
+                        }
+                    </>
+                )
+            }
+
+        },
         {
             sortable: true,
             name: 'Fecha',
@@ -94,9 +116,19 @@ const TicketAdminTabla = ({
             minWidth: '50px',
             cell: row => {
                 return (
-                    <div>
-                        <button className='btn btn-info'>Atender Ticket</button>
+                    <div className='mt-1 mb-1'>
+                        {
+                            row?.estado == 2 ? "" :
+                                <button
+                                    className='btn btn-info mb-1'
+                                    onClick={() => atenderTicket(row?.id)}
+                                >Atender</button>
+                        }
 
+                        <button
+                            className='btn btn-danger'
+                            onClick={() => finalizarTicket(row?.id)}
+                        >Finalizar</button>
                     </div>
                 )
             }
