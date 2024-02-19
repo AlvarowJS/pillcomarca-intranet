@@ -82,7 +82,7 @@ const TicketAdminTabla = ({
                 return (
                     <>
                         {
-                            row?.urgencia == 1 ?
+                            row?.urgencia == 1 || row?.urgencia == 3 ?
                                 <>
                                     Normal
                                 </>

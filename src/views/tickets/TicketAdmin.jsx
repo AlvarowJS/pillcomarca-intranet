@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import TicketAdminTabla from './admin/TicketAdminTabla';
 import TicketAdminForm from './admin/TicketAdminForm';
+import { Link } from 'react-router-dom';
 const MySwal = withReactContent(Swal)
 
 const URL = '/v1/ticket'
@@ -86,8 +87,17 @@ const TicketAdmin = () => {
   const submit = (data) => {
     console.log(data)
   }
+
+  const crearInventario = () => {
+    history.push('/tickets/hardware');
+
+  }
   return (
     <div>
+
+      <Link to='/tickets/hardware' className='btn btn-success' onClick={() => crearInventario()}>
+        Crear Inventario
+      </Link>
 
       <TicketAdminTabla
         data={data}
@@ -104,7 +114,7 @@ const TicketAdmin = () => {
         control={control}
         register={register}
         reset={reset}
-
+        getAuthHeaders={getAuthHeaders}
         horaActual={horaActual}
       />
     </div>

@@ -30,7 +30,7 @@ const TicketUserForm = ({
                 <form onSubmit={handleSubmit(submit)}>
                     <div className='form-group my-2'>
                         <label htmlFor="">Detalle</label>
-                        <textarea type="text" className="form-control" id="nota"
+                        <textarea type="text" className="form-control" id="detalle"
                             {...register('detalle')}
                         />
 
