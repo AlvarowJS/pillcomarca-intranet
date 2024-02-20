@@ -99,6 +99,32 @@ const TicketAdminTabla = ({
         },
         {
             sortable: true,
+            name: 'Usuario',
+            minWidth: '50px',
+            cell: row => {
+                return (
+                    <div>
+                        {row?.user?.nombres} {row?.user?.apellidos}
+
+                    </div>
+                )
+            }
+        },
+        {
+            sortable: true,
+            name: 'Dependencia',
+            minWidth: '50px',
+            cell: row => {
+                return (
+                    <div>
+                        {row?.user?.dependencia?.nombre_dependencia}
+
+                    </div>
+                )
+            }
+        },
+        {
+            sortable: true,
             name: 'Fecha',
             minWidth: '50px',
             cell: row => {
@@ -118,17 +144,22 @@ const TicketAdminTabla = ({
                 return (
                     <div className='mt-1 mb-1'>
                         {
-                            row?.estado == 2 || row?.estado ==3  ? "" :
+                            row?.estado == 2 || row?.estado == 3 ? "" :
                                 <button
                                     className='btn btn-info mb-1'
                                     onClick={() => atenderTicket(row?.id)}
                                 >Atender</button>
                         }
+                        {
+                            row?.estado == 2 ?
+                                <button
+                                    className='btn btn-danger'
+                                    onClick={() => finalizarTicket(row?.id)}
+                                >Finalizar</button>
+                                :
+                                ''
+                        }
 
-                        <button
-                            className='btn btn-danger'
-                            onClick={() => finalizarTicket(row?.id)}
-                        >Finalizar</button>
                     </div>
                 )
             }
