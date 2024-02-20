@@ -6,7 +6,8 @@ const URL = '/v1/hardware-tickets/'
 const URLHARD = '/v1/tipo'
 const TicketAdminForm = ({
   modal, toggle, submit, control, register,
-  reset, handleSubmit, horaActual, getAuthHeaders
+  reset, handleSubmit, horaActual, getAuthHeaders,
+  setHardware_id
 }) => {
 
   const [codigo, setCodigo] = useState()
@@ -15,6 +16,7 @@ const TicketAdminForm = ({
     bdMuni.get(`${URL}${codigo}`, getAuthHeaders())
       .then(res => {
         setDatos(res.data)
+        setHardware_id(res.data[0].id)
       })
       .catch(err => {
         console.error('Error fetching user tickets:', err);
@@ -124,6 +126,18 @@ const TicketAdminForm = ({
                   Buscar
                 </button>
               </div>
+              {datos == null || datos == [] ? "Sin Hardware" :
+                <div>
+                  Procesador : {datos[0]?.procesador} <br />
+                  Marca: {datos[0]?.marca} <br />
+                  Ram : {datos[0]?.ram} <br />
+                  Almacenamiento : {datos[0]?.procesador} <br />
+                  Tipo Almacenamiento: {datos[0]?.tipo_alma} <br />
+                  IP: {datos[0]?.ip} <br />
+                  Espefificaciones: {datos[0]?.especif} <br />
+                  Codigo Patrimonial: {datos[0]?.cod_patri} <br /><br />
+                </div>
+              }
             </Col>
           </Row>
           <Row>

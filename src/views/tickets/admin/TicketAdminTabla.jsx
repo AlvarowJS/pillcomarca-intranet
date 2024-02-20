@@ -118,7 +118,7 @@ const TicketAdminTabla = ({
                 return (
                     <div className='mt-1 mb-1'>
                         {
-                            row?.estado == 2 ? "" :
+                            row?.estado == 2 || row?.estado ==3  ? "" :
                                 <button
                                     className='btn btn-info mb-1'
                                     onClick={() => atenderTicket(row?.id)}

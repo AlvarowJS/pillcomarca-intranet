@@ -113,7 +113,7 @@ const TicketUser = () => {
                 <Col sm='3'>
                     {
                         ordenUser == 0 ? "" :
-                            `Hay ${ordenUser?.orden} Atendiendose <br />porfavor espere`
+                            `Hay ${ordenUser?.orden} en cola porfavor espere`
                     }
                 </Col>
                 <Col sm='3'>

@@ -115,12 +115,12 @@ const HardwareForm = ({
                         />
                     </div>
                     <div className='form-group my-2'>
-                        <label htmlFor="cod_patrimonial">Código Patrimonial</label>
+                        <label htmlFor="cod_patri">Código Patrimonial</label>
                         <input
-                            id="cod_patrimonial"
+                            id="cod_patri"
                             className="form-control"
                             type="text"
-                            {...register('cod_patrimonial')}
+                            {...register('cod_patri')}
                         />
                     </div>
                     <div className="form-group mb-2">

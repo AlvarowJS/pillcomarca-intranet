@@ -12,6 +12,7 @@ const MySwal = withReactContent(Swal)
 
 const URL = '/v1/ticket'
 const URLATENDER = '/v1/ticket-atender/'
+const URLFINALIZAR = 'v1/ticket-finalizar/'
 
 const TicketAdmin = () => {
   const token = localStorage.getItem('token');
@@ -20,6 +21,7 @@ const TicketAdmin = () => {
   const [data, setData] = useState([]);
   const [refresh, setRefresh] = useState(false);
   const [modal, setModal] = useState(false);
+  const [hardware_id, setHardware_id] = useState()
   const { handleSubmit, control, register, reset } = useForm();
   const getAuthHeaders = () => ({
     headers: {
@@ -84,8 +86,33 @@ const TicketAdmin = () => {
       .catch(err => null)
   }
 
+  const terminarTicket = (id, data) => {
+    bdMuni.put(`${URLFINALIZAR}${id}`, data, getAuthHeaders())
+      .then(res => {
+        setRefresh(!refresh)
+        toggle.call()
+        reset(defaultValuesForm)
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'TICKET TERMINADO',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      })
+      .catch(err => {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Contacte con el encargado',
+          showConfirmButton: false,
+        })
+      })
+  }
+
   const submit = (data) => {
-    console.log(data)
+    data.hardware_id = hardware_id
+    terminarTicket(data.id, data)
   }
 
   const crearInventario = () => {
@@ -116,6 +143,7 @@ const TicketAdmin = () => {
         reset={reset}
         getAuthHeaders={getAuthHeaders}
         horaActual={horaActual}
+        setHardware_id={setHardware_id}
       />
     </div>
   )

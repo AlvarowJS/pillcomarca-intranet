@@ -11,14 +11,17 @@ import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 // Apis
 const URL = 'v1/tipo'
+const URLHARDWARE = 'v1/hardware'
 
 const Hardware = () => {
     const token = localStorage.getItem('token')
     const [data, setData] = useState([]);
     const [refresh, setRefresh] = useState(false);
     const [modal, setModal] = useState(false);
+    const [actualizacion, setActualizacion] = useState(false)
     const { handleSubmit, control, register, reset } = useForm();
     const [oficina, setOficina] = useState()
+    const [dependencia_id, setDependencia_id] = useState()
     const getAuthHeaders = () => ({
         headers: {
             'Authorization': 'Bearer ' + token
@@ -37,19 +40,57 @@ const Hardware = () => {
         dependencia_id: ""
     };
     useEffect(() => {
-        bdMuni.get(URL, getAuthHeaders())
+        bdMuni.get(URLHARDWARE, getAuthHeaders())
             .then(res => {
                 setData(res.data)
             })
             .catch(err => {
             })
-    }, [])
+    }, [refresh])
     const toggle = () => {
+        setActualizacion(false)
         reset(defaultValuesForm);
         setModal(!modal);
     };
+    const toggleActualizacion = () => {
+        setModal(!modal)
+    }
+    const actualizarHardwareId = (id) => {
+        toggleActualizacion.call()
+        setActualizacion(true)
+        bdMuni.get(`${URLHARDWARE}/${id}`, getAuthHeaders())
+            .then(res => {
+                reset(res.data)
+            })
+            .catch(err => null)
+    }
+    const actualizarHardware = (id, data) => {
+        bdMuni.put(`${URLHARDWARE}/${id}`, data, getAuthHeaders())
+            .then(res => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Hardware Actualizado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                reset(defaultValuesForm)
+                toggle.call()
+                setRefresh(!refresh)
+
+            })
+            .catch(err => {
+                
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
     const crearHardware = data => {
-        bdMuni.post(URL, data, getAuthHeaders())
+        bdMuni.post(URLHARDWARE, data, getAuthHeaders())
             .then(res => {
                 toggle.call()
                 setRefresh(true)
@@ -73,9 +114,15 @@ const Hardware = () => {
             })
     }
     const submit = (data) => {
-        data.dependencia_id = oficina.value
-        console.log(data, "a")
-        // crearHardware(data)
+        console.log(oficina, "as")
+        oficina == undefined ?
+            data.dependencia_id = data.dependencia_id :
+            data.dependencia_id = oficina.value
+        if (actualizacion) {
+            actualizarHardware(data.id, data)
+        } else {
+            crearHardware(data)
+        }
     };
 
     return (
@@ -96,6 +143,7 @@ const Hardware = () => {
             </Row>
             <HardwareTabla
                 data={data}
+                actualizarHardwareId={actualizarHardwareId}
             />
 
             <HardwareForm
@@ -112,6 +160,8 @@ const Hardware = () => {
                 bdMuni={bdMuni}
                 oficina={oficina}
                 setOficina={setOficina}
+                toggleActualizacion={toggleActualizacion}
+
             />
         </div>
     )
