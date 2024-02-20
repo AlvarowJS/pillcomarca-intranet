@@ -3,8 +3,10 @@ import DataTable from 'react-data-table-component'
 import { Edit, Trash } from 'react-feather'
 import { Card } from 'reactstrap'
 const TablaGestion = ({
-  data
+  data,actualizarGestionId,eliminarGestion
 }) => {
+
+
   const columns = [
     {
       sortable: true,
@@ -47,7 +49,31 @@ const TablaGestion = ({
       name: 'Enlaces',
       minWidth: '25px',
       cell: row => <a target="_blank" href={row.link}>Enlace</a> // Cambia "Enlace" por el texto deseado
-    } 
+    },
+    {
+      name: 'Acciones',
+      sortable: true,
+      allowOverflow: true,
+      minWidth: '200px',
+      maxWidth: '400px',
+      cell: row => {
+        return (
+          <div className='d-flex gap-1 my-1'>
+
+            <button className='btn btn-warning'
+              onClick={() => actualizarGestionId(row?.id)}
+            >
+              <Edit />
+            </button>
+            <button className='btn' style={{ backgroundColor: '#DC3545', color: 'white' }}
+              onClick={() => eliminarGestion(row?.id)}
+            >
+              <Trash />
+            </button>
+          </div>
+        )
+      }
+    }
   ]
   
 
