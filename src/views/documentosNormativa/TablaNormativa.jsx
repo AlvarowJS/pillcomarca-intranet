@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component'
 import { Edit, Trash } from 'react-feather'
 import { Card } from 'reactstrap'
 const TablaNormativa = ({
-    data
+    data, actualizarNormativaId, eliminarNormativa
 }) => {
     const columns = [
         {
@@ -46,25 +46,47 @@ const TablaNormativa = ({
             sortable: true,
             name: 'Enlaces',
             minWidth: '25px',
-            cell: row => <a target="_blank" href={row.attributes?.archivo}>Ver Enlace</a> 
-        } 
-        
-        
-    ];
-    
-    
-        return (
-        <Card className='mt-2'>
-            <DataTable
-                noHeader
-                pagination
-                className='react-datatable'
-                columns={columns}
-                data={data}
+            cell: row => <a target="_blank" href={row.attributes?.archivo}>Ver Enlace</a>
+        },
+        {
+            name: 'Acciones',
+            sortable: true,
+            allowOverflow: true,
+            minWidth: '100px',
+            maxWidth: '200px',
+            cell: row => {
+                return (
+                    <div className='d-flex gap-1 my-1'>
 
-            />
-        </Card>
-    )
+                        <button className='btn btn-warning'
+                            onClick={() => actualizarNormativaId(row?.id)}
+                        >
+                            <Edit />
+                        </button>
+                        <button className='btn' style={{ backgroundColor: '#DC3545', color: 'white' }}
+                            onClick={() => eliminarNormativa(row?.id)}
+                        >
+                            <Trash />
+                        </button>
+                    </div>
+                )
+            }
+        }
+    ]
+
+
+return (
+    <Card className='mt-2'>
+        <DataTable
+            noHeader
+            pagination
+            className='react-datatable'
+            columns={columns}
+            data={data}
+
+        />
+    </Card>
+)
 }
 
 export default TablaNormativa
