@@ -89,16 +89,19 @@ const TicketAdminForm = ({
           <Row>
             <Col>
               <label htmlFor="urgencia">Urgencia </label>
-              <select className="form-select" id="urgencia" {...register('urgencia')}  >
+              <select className="form-select" id="urgencia" {...register('urgencia')} disabled>
                 <option value="1">Normal</option>
                 <option value="2">Urgente</option>
+                <option value="3">Muy Urgente</option>
               </select>
             </Col>
+
             <Col>
               <label htmlFor="urgencia_verdad">Urgencia de Verdad </label>
               <select className="form-select" id="urgencia_verdad" {...register('urgencia_verdad')}  >
                 <option value="1">Normal</option>
                 <option value="2">Urgente</option>
+                <option value="3">Muy Urgente</option>
               </select>
             </Col>
           </Row>
