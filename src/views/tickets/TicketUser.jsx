@@ -57,7 +57,7 @@ const TicketUser = () => {
                 setOrdenUser(0)
             })
 
-    }, [])
+    }, [refresh])
 
 
     const actualizarTicketId = (id) => {

@@ -30,12 +30,15 @@ import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
 const UserDropdown = () => {
   const loggout = () => {
     localStorage.removeItem('token', '')
-    localStorage.removeItem('nombre', '')
-    localStorage.removeItem('role', '')
-    localStorage.removeItem('id', '')
+    localStorage.removeItem('nombres', '')
+    localStorage.removeItem('apellidos', '')
+    localStorage.removeItem('idu', '')
+    localStorage.removeItem('cargo', '')
+    localStorage.removeItem('rol', '')
   }
 
-  const name = localStorage.getItem('nombre')
+  const nombres = localStorage.getItem('nombres')
+  const apellidos = localStorage.getItem('apellidos')
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
       <DropdownToggle
@@ -45,8 +48,8 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold">{name}</span>
-          <span className="user-status">Admin</span>
+          <span className="user-name fw-bold">{nombres}</span>
+          <span className="user-status">{apellidos}</span>
         </div>
         <Avatar
           img={defaultAvatar}

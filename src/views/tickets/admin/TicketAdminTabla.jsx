@@ -158,8 +158,7 @@ const TicketAdminTabla = ({
                                 >Finalizar</button>
                                 :
                                 ''
-                        }
-
+                        }                        
                     </div>
                 )
             }
