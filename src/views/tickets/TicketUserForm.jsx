@@ -61,6 +61,7 @@ const TicketUserForm = ({
                         <select className="form-select" id="urgencia" {...register('urgencia')}  >
                             <option value="1">Normal</option>
                             <option value="2">Urgente</option>
+                            <option value="3">Muy urgente</option>
                         </select>
                     </div>
                     <button className='btn btn-primary mb-2'>Enviar</button>

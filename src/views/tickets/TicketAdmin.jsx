@@ -120,7 +120,7 @@ const TicketAdmin = () => {
 
   }
   const exportarPdf = (id) => {
-      window.open(`http://127.0.0.1:8000/api/v1/ticket-exportar/${id}`)  
+      window.open(`https://sv-yptplguxwm.cloud.elastika.pe/api/v1/ticket-exportar/${id}`)  
   }
   return (
     <div>
