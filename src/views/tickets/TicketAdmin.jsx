@@ -119,6 +119,9 @@ const TicketAdmin = () => {
     history.push('/tickets/hardware');
 
   }
+  const exportarPdf = (id) => {
+      window.open(`http://127.0.0.1:8000/api/v1/ticket-exportar/${id}`)  
+  }
   return (
     <div>
 
@@ -130,6 +133,7 @@ const TicketAdmin = () => {
         data={data}
         atenderTicket={atenderTicket}
         finalizarTicket={finalizarTicket}
+        exportarPdf={exportarPdf}
       />
 
       <TicketAdminForm

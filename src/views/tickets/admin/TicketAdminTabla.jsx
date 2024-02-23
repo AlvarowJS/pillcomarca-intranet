@@ -4,7 +4,7 @@ import { Edit, Trash, Clock, CheckCircle, Activity } from 'react-feather'; // Im
 import { Card, Badge } from 'reactstrap';
 
 const TicketAdminTabla = ({
-    data, atenderTicket, finalizarTicket
+    data, atenderTicket, finalizarTicket, exportarPdf
 }) => {
     const columns = [
         {
@@ -158,7 +158,18 @@ const TicketAdminTabla = ({
                                 >Finalizar</button>
                                 :
                                 ''
-                        }                        
+                        }
+                        {
+                            row?.estado == 3 ?
+                                <button
+                                    className='btn btn-danger'
+                                    onClick={() => exportarPdf(row?.id)}
+                                >
+                                    PDF
+                                </button>
+                                : ''
+                        }
+
                     </div>
                 )
             }
