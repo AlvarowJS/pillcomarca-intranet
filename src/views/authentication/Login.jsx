@@ -58,7 +58,7 @@ const Login = () => {
     catch (err) {
       localStorage.setItem('token', '');
       localStorage.setItem('rol', '');
-      localStorage.setItem('idu', res?.user);
+      localStorage.setItem('idu', '');
       localStorage.setItem('nombres', '');
       localStorage.setItem('apellidos', '');
       localStorage.setItem('cargo', '');

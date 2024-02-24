@@ -17,14 +17,16 @@ const VerticalLayout = (props) => {
   // }, [])
   const rol = localStorage?.getItem("rol");
   let filteredNavigation = [];
-
+  console.log(rol)
   if (rol === "7") {
-    // console.log(navigation, "??")
-    // filteredNavigation = navigation.slice(0, 2); // Obtener los primeros dos elementos del array
     filteredNavigation = [navigation[0], navigation[4]]
   } else if (rol === "1") {
-    filteredNavigation = navigation; // Obtener el array completo
-  } else if(rol == "8" || rol == "6" == rol == "5" || rol == "4" == rol == "3" || rol == "2"  ){
+    filteredNavigation = navigation;
+  }
+  // else if (rol === "8" || rol === "6" === rol == "5" || rol === "4" === rol === "3" || rol === "2") {
+  //   filteredNavigation = [navigation[0]]
+  // }
+  else {
     filteredNavigation = [navigation[0]]
   }
 

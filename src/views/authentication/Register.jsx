@@ -43,6 +43,16 @@ const Register = () => {
   const [dependencias, setDependencias] = useState()
   const [cargo, setCargo] = useState({});
 
+  const valuesDefault = {
+    apellidos: '',
+    cargo_id: '',
+    celular: '',
+    dependencia_id: '',
+    dni: '',
+    email: '',
+    nombres: '',
+    password: ''
+  }
   useEffect(() => {
     bdMuni.get(`/v1/cargos-dependencias`)
       .then(res => {
@@ -61,7 +71,7 @@ const Register = () => {
 
 
 
-  const submit = async (data) => {
+  const submit = (data) => {
     setRespuesta(false)
     if (data.password != data.password_re) {
       setRespuestaMatch(true)
@@ -69,26 +79,47 @@ const Register = () => {
       setIsLoading(true)
       setRespuestaMatch(false)
 
-      try {
-        const response = await bdMuni.post('/register-user', data)
-        // const res = response.data
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: 'Registro Completado',
-          showConfirmButton: false,
-          timer: 1500
+      bdMuni.post('/register-user', data)
+        .then(res => {
+          reset(valuesDefault)
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Registro Completado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          navigate('/login')
         })
-        navigate('/login')
-        // console.log(res)
-      } catch (err) {
-        setIsLoading(false)
-        setRespuesta(response.data)
-      }
-
+        .catch(err => {
+          setIsLoading(false)
+          setRespuesta(response.data)
+        })
     }
+    // firs try
+    // setRespuesta(false)
+    // if (data.password != data.password_re) {
+    //   setRespuestaMatch(true)
+    // } else {
+    // setIsLoading(true)
+    // setRespuestaMatch(false)
 
-
+    //   try {
+    //     const response = await bdMuni.post('/register-user', data)
+    //     // const res = response.data
+    //     Swal.fire({
+    //       position: 'center',
+    //       icon: 'success',
+    //       title: 'Registro Completado',
+    //       showConfirmButton: false,
+    //       timer: 1500
+    //     })
+    //     navigate('/login')
+    //     // console.log(res)
+    //   } catch (err) {
+    //     setIsLoading(false)
+    //     setRespuesta(response.data)
+    //   }
 
   }
 
@@ -160,20 +191,24 @@ const Register = () => {
                 />
               </div>
               <div className="mb-1">
-                <label className="form-label" htmlFor="cargo">
+                <label className="form-label" htmlFor="cargo_id">
                   Cargo
                 </label>
                 <select
                   className="form-select"
                   id="cargo_id"
-                  {...register("cargo_id")}
+                  {...register("cargo_id", { required: "Este campo es obligatorio." })}
+
                 >
+                  <option value="">Seleccione un cargo</option>
                   {options?.map((option) => (
                     <option key={option.id} value={option.id}>
                       {option.nombre_cargo}
                     </option>
                   ))}
                 </select>
+                {errors.cargo_id && <p className="text-danger">{errors.cargo_id.message}</p>}
+
               </div>
               <div className="mb-1">
                 <label className="form-label" htmlFor="dependencia">
@@ -182,14 +217,17 @@ const Register = () => {
                 <select
                   className="form-select"
                   id="dependencia_id"
-                  {...register("dependencia_id")}
+                  {...register("dependencia_id", { required: "Este campo es obligatorio." })}
                 >
+                  <option value="">Seleccione un dependencia</option>
+
                   {dependencias?.map((dependencia) => (
                     <option key={dependencia.id} value={dependencia.id}>
                       {dependencia.nombre_dependencia}
                     </option>
                   ))}
                 </select>
+                {errors.dependencia_id && <p className="text-danger">{errors.dependencia_id.message}</p>}
               </div>
               <div className="mb-1">
                 <Label className="form-label" for="celular" >
