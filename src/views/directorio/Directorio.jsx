@@ -97,8 +97,17 @@ const Directorio = () => {
 
     // Actualiza directorio (PUT)
     const actualizarDirectorio = (id, data) => {
-
-        bdMuni.put(`${URLDIRECTORIO}`, data, getAuthHeaders())
+        const f = new FormData()
+        f.append('id', data.id)
+        f.append('nombres', data.nombres)
+        f.append('apellidos', data.apellidos)
+        f.append('cel', data.cel)
+        f.append('correo', data.correo)
+        f.append('cargo', data.cargo)
+        f.append('dependencia', data.dependencia)
+        f.append('foto', foto)
+        // console.log(f," ?")
+        bdMuni.post(`${URLDIRECTORIO}`, f, getAuthHeaders())
             .then(res => {
                 console.log(res.data)
                 reset(defaulValuesForm)
@@ -107,7 +116,7 @@ const Directorio = () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Directorio Actulizado',
+                    title: 'Directorio Actualizado',
                     showConfirmButton: false,
                     timer: 1500
                 })

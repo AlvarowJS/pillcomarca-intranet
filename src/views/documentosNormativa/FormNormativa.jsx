@@ -50,12 +50,15 @@ const FormNormativa = ({
                         <label htmlFor="">
                             Descripcion
                         </label>
-                        <input
+                        <textarea type="text" className="form-control" id="descripcion"
+                            {...register('descripcion')}
+                        />
+                        {/* <input
                             className="form-control"
                             type="text"
                             placeholder='Ingrese nombre'
                             {...register('descripcion')}
-                        />
+                        /> */}
                     </div>
                     <div className='form-group my-2'>
                         <label htmlFor="">

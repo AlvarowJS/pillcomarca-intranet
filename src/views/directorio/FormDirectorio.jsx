@@ -84,7 +84,7 @@ const FormDirectorio = ({
             />
           </div>
           <div className="form-group mx-4 mb-2">
-            <label htmlFor="foto">Foto de asesor</label>
+            <label htmlFor="foto">Foto</label>
             <input type="file" className="form-control" id="foto"
               {...register('foto')}
               onChange={handleFileChange}
