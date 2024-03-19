@@ -60,13 +60,13 @@ const HardwareTabla = ({
       sortable: true,
       name: 'Dependencia',
       minWidth: '175px',
-      selector: row => row.dependencia_id
+      selector: row => row?.dependencia?.nombre_dependencia
     },
     {
       sortable: true,
       name: 'Tipo',
       minWidth: '175px',
-      selector: row => row.tipo_id
+      selector: row => row?.tipo?.nombre
     },
     {
       name: 'Acciones',

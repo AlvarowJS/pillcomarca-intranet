@@ -18,35 +18,35 @@ const TablaNormativa = ({
             sortable: true,
             name: 'Nombres',
             minWidth: '20%',
-            selector: row => row?.attributes?.nombre,
-            cell: row => <div>{row?.attributes?.nombre}</div>
+            selector: row => row?.nombre,
+            cell: row => <div>{row?.nombre}</div>
         },
         {
             sortable: true,
             name: 'Tipo de Documento',
             minWidth: '20%',
-            selector: row => row?.attributes?.Tipodedocumento?.nombre,
-            cell: row => <div>{row?.attributes?.Tipodedocumento?.nombre}</div>
+            selector: row => row?.tipodedocumento?.nombre,
+            cell: row => <div>{row?.tipodedocumento?.nombre}</div>
         },
         {
             sortable: true,
             name: 'Descripción',
             minWidth: '20%',
-            selector: row => row?.attributes?.descripcion,
-            cell: row => <div>{row?.attributes?.descripcion}</div>
+            selector: row => row?.descripcion,
+            cell: row => <div>{row?.descripcion}</div>
         },
         {
             sortable: true,
             name: 'Fecha',
             minWidth: '15%',
-            selector: row => row?.attributes?.fecha,
-            cell: row => <div>{row?.attributes?.fecha}</div>
+            selector: row => row?.fecha,
+            cell: row => <div>{row?.fecha}</div>
         },
         {
             sortable: true,
             name: 'Enlaces',
             minWidth: '25px',
-            cell: row => <a target="_blank" href={row.attributes?.archivo}>Ver Enlace</a>
+            cell: row => <a target="_blank" href={row?.archivo}>Ver Enlace</a>
         },
         {
             name: 'Acciones',

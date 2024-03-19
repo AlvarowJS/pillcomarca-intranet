@@ -13,6 +13,8 @@ import FormCurricular from './FormCurricular'
 import FormResultado from './FormResultado'
 const URL = '/v1/convocatoria'
 const URLBASES = '/v1/bases'
+const URLCURRICULAR = '/v1/result'
+const URLRESULTADOS = '/v1/resultado'
 const Convocatoria = () => {
     const token = localStorage.getItem('token')
     const userId = localStorage.getItem('idu');
@@ -64,6 +66,16 @@ const Convocatoria = () => {
         archivo: '',
         convocatoria_id: ''
     }
+    const defaultCurricular = {
+        nombre: '',
+        archivo: '',
+        convocatoria_id: ''
+    }
+    const defaultResultados = {
+        nombre: '',
+        archivo: '',
+        convocatoria_id: ''
+    }
 
     useEffect(() => {
         bdMuni.get(`${URL}`, getAuthHeaders())
@@ -75,30 +87,8 @@ const Convocatoria = () => {
             })
     }, [refresh])
 
-    const crearBase = (data) => {
-        bdMuni.post(URL, data, getAuthHeaders())
-            .then(res => {
-                reset(defaultBases)
-                toggleBases.call()
-                setRefresh(!refresh)
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Consultorio creado',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            })
-            .catch(err => {
-                Swal.fire({
-                    position: 'center',
-                    icon: 'error',
-                    title: 'Contacte con soporte',
-                    showConfirmButton: false,
-                })
-            })
-    }
-    // Crear Consultorio
+    
+    // Crear convocatoria
     const crearConvocatoria = (data) => {
         bdMuni.post(URL, data, getAuthHeaders())
             .then(res => {
@@ -123,6 +113,32 @@ const Convocatoria = () => {
             })
     }
 
+    // Crear Base
+    const crearBase = (data) => {
+        bdMuni.post(URLBASES, data, getAuthHeaders())
+            .then(res => {
+                reset(defaultBases)
+                toggleBases.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Bases creadas',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
+
+    // Crear 
     // Actualiza Consultorio (PUT)
     const actualizarConvocatoria = (id, data) => {
         bdMuni.put(`${URL}/${id}`, data, getAuthHeaders())
@@ -197,7 +213,7 @@ const Convocatoria = () => {
             .catch(err => null)
     }
 
-    // Si es actualizacion llamara a actualizarPaciente pero si es false crear un Consultorio
+
     const submit = (data) => {
         if (actualizacion) {
             actualizarConvocatoria(data.id, data)
@@ -242,18 +258,14 @@ const Convocatoria = () => {
                 getAuthHeaders={getAuthHeaders}
             />
 
-            <FormBases 
-                toggleBases={toggleBases}
-                modalBases={modalBases}
-                submitBases={submitBases}
-                handleSubmit={handleSubmit}
-                reset={reset}
-                register={register}
-                URL={URL}
-                getAuthHeaders={getAuthHeaders}
+            {/* <FormBases
+            
             />
-            <FormCurricular />
-            <FormResultado />
+            <FormCurricular
+               
+                
+            />
+            <FormResultado /> */}
         </>
     )
 }

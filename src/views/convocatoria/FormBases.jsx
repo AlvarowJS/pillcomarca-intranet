@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
 import bdMuni from '../../api/bdMuni'
 const FormBases = ({
-    URL, toggleBases, modalBases, submitBases, handleSubmit,
+    data, toggleBases, modalBases, submitBases, handleSubmit,
     reset, register, getAuthHeaders
 }) => {
 

@@ -30,8 +30,8 @@ const FormConvocatoria = ({
                             id="ubicacion_id"
                             {...register("estado")}
                         >
-                            <option value="true">Activo</option>
-                            <option value="false">Concluido</option>
+                            <option value="activo">Activo</option>
+                            <option value="concluido">Concluido</option>
                         </select>
                     </div>
                     <button className='btn btn-primary mb-2'>Enviar</button>

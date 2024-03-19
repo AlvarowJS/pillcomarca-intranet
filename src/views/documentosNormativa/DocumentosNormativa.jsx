@@ -7,6 +7,7 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const MySwal = withReactContent(Swal)
 const URL = '/v1/documentonormativa'
+const URLSIMPLE = '/v1/documentonormativa-simple'
 import { Breadcrumb, Col, Card, Row, Button } from 'reactstrap'
 
 import { useForm } from 'react-hook-form'
@@ -35,9 +36,9 @@ const DocumentosNormativa = () => {
     setModal(!modal)
   }
   useEffect(() => {
-    bdMuni.get(URL, getAuthHeaders())
+    bdMuni.get(URLSIMPLE, getAuthHeaders())
       .then(res => {
-        setData(res.data.data)
+        setData(res.data)
       })
       .catch(err => {
 

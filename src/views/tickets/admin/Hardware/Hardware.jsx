@@ -42,7 +42,7 @@ const Hardware = () => {
     useEffect(() => {
         bdMuni.get(URLHARDWARE, getAuthHeaders())
             .then(res => {
-                setData(res.data)
+                setData(res.data.data)
             })
             .catch(err => {
             })
