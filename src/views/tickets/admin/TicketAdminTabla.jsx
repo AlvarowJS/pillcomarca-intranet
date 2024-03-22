@@ -112,6 +112,19 @@ const TicketAdminTabla = ({
         },
         {
             sortable: true,
+            name: 'Número',
+            minWidth: '50px',
+            cell: row => {
+                return (
+                    <div>
+                        {row?.user?.celular}
+
+                    </div>
+                )
+            }
+        },
+        {
+            sortable: true,
             name: 'Dependencia',
             minWidth: '50px',
             cell: row => {
