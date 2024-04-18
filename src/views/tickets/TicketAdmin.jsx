@@ -22,6 +22,7 @@ const TicketAdmin = () => {
   const [refresh, setRefresh] = useState(false);
   const [modal, setModal] = useState(false);
   const [hardware_id, setHardware_id] = useState()
+  const [codPatrimoniales, setCodPatrimoniales] = useState()
   const { handleSubmit, control, register, reset } = useForm();
   const getAuthHeaders = () => ({
     headers: {
@@ -77,14 +78,19 @@ const TicketAdmin = () => {
   };
 
   const finalizarTicket = (id) => {
-    toggle.call()
     setHoraActual(obtenerHoraActual());
     bdMuni.get(`${URL}/${id}`, getAuthHeaders())
       .then(res => {
-        reset(res.data)
+        reset(res?.data?.ticket)
+        setCodPatrimoniales(res?.data?.hardware)
+        
+        // console.log(res.data.user.dependencia_id, "holaaaalkfjaskl")
       })
       .catch(err => null)
+    toggle.call()
+
   }
+
 
   const terminarTicket = (id, data) => {
     bdMuni.put(`${URLFINALIZAR}${id}`, data, getAuthHeaders())
@@ -148,6 +154,7 @@ const TicketAdmin = () => {
         getAuthHeaders={getAuthHeaders}
         horaActual={horaActual}
         setHardware_id={setHardware_id}
+        codPatrimoniales={codPatrimoniales}
       />
     </div>
   )

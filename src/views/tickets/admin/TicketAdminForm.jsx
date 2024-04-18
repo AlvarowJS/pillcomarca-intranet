@@ -7,9 +7,10 @@ const URLHARD = '/v1/tipo'
 const TicketAdminForm = ({
   modal, toggle, submit, control, register,
   reset, handleSubmit, horaActual, getAuthHeaders,
-  setHardware_id
+  setHardware_id, codPatrimoniales
 }) => {
 
+  console.log(codPatrimoniales, "Asd")
   const [codigo, setCodigo] = useState()
   const [datos, setDatos] = useState()
   const buscarCodigo = () => {
@@ -21,6 +22,9 @@ const TicketAdminForm = ({
       .catch(err => {
         console.error('Error fetching user tickets:', err);
       });
+  }
+  const cambiarCodigo = (cod) => {
+    setCodigo(cod)
   }
   return (
     <Modal isOpen={modal} toggle={toggle} size='lg'>
@@ -113,6 +117,36 @@ const TicketAdminForm = ({
               />
             </Col>
           </Row>
+          <Row style={{marginTop: 10}} >
+            <Col style={{ border: '1px solid #adb5bd' }}>
+              Código Patrimonial
+            </Col>
+            <Col style={{ border: '1px solid #adb5bd' }}>
+              Detalles
+            </Col>
+            <Col style={{ border: '1px solid #adb5bd' }}>
+              Seleccionar
+            </Col>
+          </Row>
+          <Row>
+
+            {codPatrimoniales?.map((item, index) => (
+              <>
+                <Col key={index} style={{ border: '1px solid #adb5bd' }}>
+                  <p>{item?.cod_patri}</p>
+                </Col>
+                <Col style={{ border: '1px solid #adb5bd' }}>
+                  <p>{item?.especif}</p>
+                </Col>
+                <Col style={{ border: '1px solid #adb5bd' }}>
+                  {/* <p>{item?.cod_patri}</p> */}
+                  <Button style= {{marginTop:4}}color='secondary' type='button' onClick={() => cambiarCodigo(item?.cod_patri)}>
+                  Seleccionar
+                  </Button>
+                </Col>
+              </>
+            ))}
+          </Row>
           <Row>
             <Col>
               <div className='form-group d-flex gap-2 my-2'>
@@ -122,7 +156,7 @@ const TicketAdminForm = ({
                 <input
                   className="form-control"
                   type="text"
-                  // value={codigo}
+                  value={codigo}
                   onChange={(e) => setCodigo(e.target.value)}
                 />
                 <button type='button' className='btn btn-info' onClick={() => buscarCodigo()}>

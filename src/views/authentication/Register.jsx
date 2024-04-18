@@ -93,7 +93,17 @@ const Register = () => {
         })
         .catch(err => {
           setIsLoading(false)
-          setRespuesta(response.data)
+          // setRespuesta(res.data)
+          if(err.response.status == 409){
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: err.response.data.error,
+              showConfirmButton: false,
+              timer: 2500
+            })
+          }
+         
         })
     }
     // firs try
