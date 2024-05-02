@@ -72,7 +72,6 @@ const DocumentosNormativa = () => {
 
     bdMuni.put(`${URL}/${id}`, data, getAuthHeaders())
       .then(res => {
-        console.log(res.data)
         reset(defaulValuesForm)
         toggle.call()
         setRefresh(!refresh)
@@ -85,7 +84,6 @@ const DocumentosNormativa = () => {
         })
       })
       .catch(err => {
-        console.log(err)
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -143,7 +141,6 @@ const DocumentosNormativa = () => {
 
 
   const submit = (data) => {
-console.log(data)
     if (actualizacion) {
       actualizarNormativa(data.id, data)
     } else {

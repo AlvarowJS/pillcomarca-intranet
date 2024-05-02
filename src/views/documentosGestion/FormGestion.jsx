@@ -20,7 +20,6 @@ const FormGestion = ({
 
   }, [])
 
-  console.log(tipos)
   return (
     <Modal isOpen={modal} toggle={toggle} size='lg'>
       <ModalHeader>

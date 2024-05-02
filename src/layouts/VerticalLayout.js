@@ -16,8 +16,7 @@ const VerticalLayout = (props) => {
   //   axios.get(URL).then(response => setMenuData(response.data))
   // }, [])
   const rol = localStorage?.getItem("rol");
-  let filteredNavigation = [];
-  console.log(rol)
+  let filteredNavigation = [];  
   if (rol === "7") {
     filteredNavigation = [navigation[0], navigation[4]]
   } else if (rol === "1") {
@@ -27,7 +26,7 @@ const VerticalLayout = (props) => {
   //   filteredNavigation = [navigation[0]]
   // }
   else {
-    filteredNavigation = [navigation[0]]
+    filteredNavigation = [navigation[0], navigation[1]]
   }
 
   return (

@@ -15,12 +15,10 @@ const FormNormativa = ({
         bdMuni.get(URL, getAuthHeaders())
             .then(res => {
                 setTipos(res.data)
-                console.log(res.data)
             })
             .catch(err => { })
 
     }, [])
-    console.log(tipos)
     return (
         <Modal isOpen={modal} toggle={toggle} size='lg'>
             <ModalHeader>

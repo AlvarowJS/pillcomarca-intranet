@@ -78,7 +78,6 @@ const Noticias = () => {
         })
       })
       .catch(err => {
-        console.log(err)
         Swal.fire({
           position: 'center',
           icon: 'error',
@@ -124,14 +123,12 @@ const Noticias = () => {
       }
     })
       .then(res => {
-        console.log(res?.data)        
         const imagenes = res?.data?.noticia_imagenes
         const arrayImagenes = []
         imagenes?.map((item) => {
           // arrayImagenes.push(item.imagen)
           arrayImagenes.push({'imagen': item?.imagen})
         })
-        console.log(arrayImagenes, "sdsds")
         setFormArray(arrayImagenes)
         setObjUpdate(res?.data)
         const object = res?.data
@@ -185,8 +182,7 @@ const Noticias = () => {
             </Button>
           </Col>
         </Row>
-
-
+    
       </Card>
       <TablaNoticias
         updateNoticiaById={updateNoticiaById}

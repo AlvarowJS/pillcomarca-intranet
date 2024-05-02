@@ -23,6 +23,7 @@ import Convocatoria from "../../views/convocatoria/Convocatoria";
 import Intervencion from "../../views/intervencion/Intervencion";
 import Directorio from "../../views/directorio/Directorio";
 import Hardware from "../../views/tickets/admin/Hardware/Hardware";
+import Poi from "../../views/poi/Poi";
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
 
@@ -135,6 +136,10 @@ const Routes = [
   {
     path: "/tickets",
     element: <AuthGuard><Tickets /></AuthGuard>,
+  },
+  {
+    path: "/poi",
+    element: <AuthGuard><Poi /></AuthGuard>,
   },
   {
     path: "/tickets/hardware",

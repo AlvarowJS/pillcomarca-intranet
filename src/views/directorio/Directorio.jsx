@@ -106,10 +106,8 @@ const Directorio = () => {
         f.append('cargo', data.cargo)
         f.append('dependencia', data.dependencia)
         f.append('foto', foto)
-        // console.log(f," ?")
         bdMuni.post(`${URLDIRECTORIO}`, f, getAuthHeaders())
             .then(res => {
-                console.log(res.data)
                 reset(defaulValuesForm)
                 toggle.call()
                 setRefresh(!refresh)

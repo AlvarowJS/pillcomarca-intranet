@@ -28,7 +28,6 @@ const HardwareForm = ({
                 setDependencias(res.data)
             })
             .catch(err => {
-                console.log(err)
             })
     }, [])
     const options = dependencias?.map(option => ({

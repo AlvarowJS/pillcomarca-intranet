@@ -11,7 +11,6 @@ const FormBases = ({
         bdMuni.get(URL, getAuthHeaders())
             .then(res => {
                 setOptions(res.data)
-                console.log(res.data)
             })
             .catch(err => console.log(err))
     }, [])

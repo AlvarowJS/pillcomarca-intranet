@@ -8,6 +8,12 @@ export default [
     navLink: "/tickets",
   },
   {
+    id: "POI",
+    title: "POI",
+    icon: <FileText size={20} />,
+    navLink: "/poi",
+  },
+  {
     id: "DocumentosGestion",
     title: "DocumentosGestion",
     icon: <FileText size={20} />,

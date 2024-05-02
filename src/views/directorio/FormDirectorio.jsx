@@ -8,7 +8,6 @@ const FormDirectorio = ({
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFoto(file)
-    console.log(file)
   };
   return (
     <Modal isOpen={modal} toggle={toggle || toggleActualizacion} size='lg'>

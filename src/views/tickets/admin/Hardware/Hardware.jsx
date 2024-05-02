@@ -114,7 +114,6 @@ const Hardware = () => {
             })
     }
     const submit = (data) => {
-        console.log(oficina, "as")
         oficina == undefined ?
             data.dependencia_id = data.dependencia_id :
             data.dependencia_id = oficina.value

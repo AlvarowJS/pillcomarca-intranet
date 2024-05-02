@@ -11,7 +11,6 @@ const TicketAdminForm = ({
   setHardware_id, codPatrimoniales
 }) => {
 
-  console.log(codPatrimoniales, "Asd")
   const [codigo, setCodigo] = useState()
   const [datos, setDatos] = useState()
   const buscarCodigo = () => {

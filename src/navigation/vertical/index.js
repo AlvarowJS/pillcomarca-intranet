@@ -1,4 +1,4 @@
-import { File, Tag, FileText, BarChart,UserCheck, Table, Edit, UserMinus } from "react-feather";
+import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus } from "react-feather";
 
 export default [
   {
@@ -6,6 +6,12 @@ export default [
     title: "Tickets",
     icon: <Tag size={20} />,
     navLink: "/tickets",
+  }, 
+  {
+    id: "POI",
+    title: "POI",
+    icon: <FileText size={20} />,
+    navLink: "/poi",
   },
   {
     id: "DocumentosGestion",
