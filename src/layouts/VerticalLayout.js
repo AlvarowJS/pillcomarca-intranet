@@ -18,7 +18,7 @@ const VerticalLayout = (props) => {
   const rol = localStorage?.getItem("rol");
   let filteredNavigation = [];  
   if (rol === "7") {
-    filteredNavigation = [navigation[0], navigation[5]]
+    filteredNavigation = [navigation[1], navigation[6]]
   } else if (rol === "1") {
     filteredNavigation = navigation;
   }

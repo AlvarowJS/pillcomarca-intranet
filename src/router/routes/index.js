@@ -24,6 +24,7 @@ import Intervencion from "../../views/intervencion/Intervencion";
 import Directorio from "../../views/directorio/Directorio";
 import Hardware from "../../views/tickets/admin/Hardware/Hardware";
 import Poi from "../../views/poi/Poi";
+import Dashboard from "../../views/dashboard/Dashboard";
 
 // import OperacionesTrans from "../../views/operaciones/OperacionesTrans";
 
@@ -65,24 +66,24 @@ const AuthGuard = ({ children }) => {
           // Si el token no es válido, llame a "navigate" para redirigir al usuario a la página de inicio de sesión
           if (rol == "1") {
           } else if (rol == "2") {
-            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
+            const restrictedRoutes = ["/dashboard","/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
             if (restrictedRoutes.includes(window.location.pathname)) {
               navigate("/error");
             }
           } else if (rol == "7") {
-            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
+            const restrictedRoutes = ["/dashboard","/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
             if (restrictedRoutes.includes(window.location.pathname)) {
               navigate("/error");
             }
           }
           else if (rol == "6") {
-            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
+            const restrictedRoutes = ["/dashboard","/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
             if (restrictedRoutes.includes(window.location.pathname)) {
               navigate("/error");
             }
           }
           else {
-            const restrictedRoutes = ["/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
+            const restrictedRoutes = ["/dashboard","/documentos-gestion", "/documentos-normativa", "noticias","/tickets/hardware"];
             if (restrictedRoutes.includes(window.location.pathname)) {
               navigate("/error");
             }
@@ -132,6 +133,10 @@ const Routes = [
     index: true,
     element: <Navigate replace to={DefaultRoute} />,
 
+  },
+  {
+    path: "/dashboard",
+    element: <AuthGuard><Dashboard /></AuthGuard>,
   },
   {
     path: "/tickets",

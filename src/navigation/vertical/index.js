@@ -1,6 +1,12 @@
-import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus } from "react-feather";
+import { File, Tag, FileText, BarChart, UserCheck, Table, Edit, UserMinus, PieChart } from "react-feather";
 
 export default [
+  {
+    id: "Dashboard",
+    title: "Dashboard",
+    icon: <PieChart size={20} />,
+    navLink: "/dashboard",
+  },
   {
     id: "Tickets",
     title: "Tickets",
