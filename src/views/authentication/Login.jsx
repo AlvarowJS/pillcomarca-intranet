@@ -93,6 +93,9 @@ const Login = () => {
             <CardText className="mb-2">
               Porfavor ingrese tu usuario y contraseña
             </CardText>
+            <CardText className="mb-2">
+              En caso ser un usuario nuevo acercarse a Infórmatica para el registro
+            </CardText>
             <Form
               className="auth-login-form mt-2"
 
@@ -164,12 +167,12 @@ const Login = () => {
                 Ingresar
               </Button>
             </Form>
-            <p className="text-center mt-2">
+            {/* <p className="text-center mt-2">
               <span className="me-25">Eres nuevo en la plataforma?</span>
               <Link to="/register">
                 <span>Crea una cuenta</span>
               </Link>
-            </p>
+            </p> */}
 
           </Col>
         </Col>

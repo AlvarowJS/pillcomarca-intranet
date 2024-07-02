@@ -92,7 +92,9 @@ const AuthGuard = ({ children }) => {
 
 
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        navigate("/error")
+      })
 
   }, [])
 
