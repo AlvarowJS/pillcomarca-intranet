@@ -1,4 +1,4 @@
-import { File, Tag, FileText, BarChart, Table, Edit, UserMinus, UserCheck, PieChart } from "react-feather";
+import { File, Tag, FileText, BarChart, Table, Edit, UserMinus, UserCheck, PieChart, UserPlus } from "react-feather";
 
 export default [
   {
@@ -61,6 +61,11 @@ export default [
     title: "Directorio",
     icon: <UserCheck size={20} />,
     navLink: "/directorio",
+  },
+  {
+    id: "Usuarios",
+    title: "Usuarios",
+    icon: <UserPlus size={20} />,
+    navLink: "/users",
   }
-
 ];
