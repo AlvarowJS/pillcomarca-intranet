@@ -26,7 +26,7 @@ const VerticalLayout = (props) => {
   //   filteredNavigation = [navigation[0]]
   // }
   else {
-    filteredNavigation = [navigation[0], navigation[1]]
+    filteredNavigation = [navigation[1], navigation[2]]
   }
 
   return (
