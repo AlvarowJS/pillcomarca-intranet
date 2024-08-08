@@ -5,7 +5,11 @@ import { Card, CardHeader, CardTitle, Input, Label, Row, Col, Button } from 'rea
 
 
 
-const TablaNoticias = ({ updateNoticiaById, getData, setCurrentPage, currentPage }) => {
+const TablaNoticias = ({ 
+    updateNoticiaById, getData,
+    search, filter
+
+}) => {
 
 
 
@@ -23,21 +27,42 @@ const TablaNoticias = ({ updateNoticiaById, getData, setCurrentPage, currentPage
             name: 'Fecha',
             minWidth: '25px',
             maxWidth: '150px',
-            selector: row => row.fecha
+            selector: row => row.fecha,
+            cell: row => {
+                return (
+                    <>
+                        <p>{row?.fecha}</p>
+                    </>
+                )
+            }
         },
         {
             sortable: true,
             name: 'TITULO',
-            minWidth: '100px',
-            maxWidth: '150px',
-            selector: row => row?.titulo
+            minWidth: '200px',
+            maxWidth: '450px',
+            selector: row => row?.titulo,
+            cell: row => {
+                return (
+                    <>
+                        <p>{row?.titulo}</p>
+                    </>
+                )
+            }
         },
         {
             sortable: true,
             name: 'NOTA DE PRENSA',
-            minWidth: '155px',
-            maxWidth: '200px',
-            selector: row => row?.nota
+            minWidth: '555px',
+            maxWidth: '700px',
+            selector: row => row?.nota,
+            cell: row => {
+                return (
+                    <>
+                        <p>{row?.nota}</p>
+                    </>
+                )
+            }
         },
         {
             sortable: true,
@@ -83,16 +108,9 @@ const TablaNoticias = ({ updateNoticiaById, getData, setCurrentPage, currentPage
             <DataTable
                 noHeader
                 pagination
-                paginationServer
                 className='react-dataTable'
                 columns={serverSideColumns}
-                sortIcon={<ChevronDown size={10} />}
-                data={getData}
-                paginationPerPage={10} // Cantidad de elementos por página
-                paginationRowsPerPageOptions={[10, 20, 30]} // Opciones para la cantidad de elementos por página
-                paginationTotalRows={getData?.length} // Total de registros
-                paginationDefaultPage={currentPage}
-                onChangePage={(page) => setCurrentPage(page)}
+                data={search ? filter : getData}
             />
         </div>
     )

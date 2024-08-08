@@ -77,6 +77,13 @@ const AuthGuard = ({ children }) => {
               navigate("/error");
             }
           }
+          // imagen
+          else if (rol == "8") {
+            const restrictedRoutes = ["/dashboard", "/documentos-gestion", "/documentos-normativa", "/tickets/hardware", "/users"];
+            if (restrictedRoutes.includes(window.location.pathname)) {
+              navigate("/error");
+            }
+          }
           else if (rol == "6") {
             const restrictedRoutes = ["/dashboard", "/documentos-gestion", "/documentos-normativa", "noticias", "/tickets/hardware", "/users"];
             if (restrictedRoutes.includes(window.location.pathname)) {

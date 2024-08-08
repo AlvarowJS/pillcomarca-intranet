@@ -4,6 +4,11 @@ import bdMuni from '../../api/bdMuni';
 import UserForm from './UserForm';
 import UserTable from './UserTable';
 import UserFormPass from './UserFormPass';
+import { Col, Input, Label, Row } from 'reactstrap';
+// sweetalert2
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const MySwal = withReactContent(Swal)
 
 const URL = '/v1/usuarios';
 const URLSAVE = '/register-user';
@@ -14,12 +19,14 @@ const URLPass = '/actualizar-password';
 const Users = () => {
   const [refresh, setRefresh] = useState(false)
   const [data, setData] = useState();
+  const [filter, setFilter] = useState();
   const [modal, setModal] = useState(false);
   const [modalPass, setModalPass] = useState(false);
   const [actualizacion, setActualizacion] = useState(false);
   const [actualizacionPass, setActualizacionPass] = useState(false);
   const { handleSubmit, register, reset } = useForm();
   const token = localStorage.getItem("token");
+  const [search, setSearch] = useState()
 
   const defaultValuesForm = {
     nombres: '',
@@ -70,9 +77,21 @@ const Users = () => {
         toggle();
         reset(defaultValuesForm);
         setRefresh(!refresh);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Usuario Creado',
+          showConfirmButton: false,
+          timer: 1500
+        })
       })
       .catch((err) => {
-        console.log(err);
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Contacte con soporte',
+          showConfirmButton: false,
+        })
       });
   };
 
@@ -81,7 +100,23 @@ const Users = () => {
       .then(res => {
         reset(defaultValuesForm);
         setRefresh(!refresh);
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Usuario Actualizado',
+          showConfirmButton: false,
+          timer: 1500
+        })
         toggle();
+        
+      })
+      .catch(err => {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Contacte con soporte',
+          showConfirmButton: false,
+        })
       });
   };
 
@@ -91,9 +126,10 @@ const Users = () => {
     bdMuni.get(`${URLGET}/${id}`, getAuthheaders())
       .then(res => {
         reset(res.data.user);
+       
       })
       .catch(err => {
-        console.log(err);
+        
       });
   };
 
@@ -103,7 +139,23 @@ const Users = () => {
         reset(defaultValuesForm);
         setRefresh(!refresh);
         togglePass();
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Contraseña Actualizada',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      })
+      .catch(err => {
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: 'Contacte con soporte',
+          showConfirmButton: false,
+        })
       });
+
   };
 
   const actualizarPassId = (id) => {
@@ -128,11 +180,42 @@ const Users = () => {
     }
   };
 
+  const handleFilter = (e) => {
+    setSearch(e.target.value)
+  };
+
+  useEffect(() => {
+    setFilter(data?.filter(e =>
+    (e.nombres && e.apellidos &&
+      (e.nombres.toLowerCase() + ' ' + e.apellidos.toLowerCase()).indexOf(search?.toLowerCase()) !== -1)
+    ))
+  }, [search])
+
+  console.log(data, "los usuarios");
   return (
     <>
-      <button className='btn btn-primary' onClick={toggle}>
-        +Agregar
-      </button>
+      <Row className='mb-2'>
+        <Col sm='6'>
+          <Label className='me-1' for='search-input'>
+            Buscar
+          </Label>
+          <Input
+            className='dataTable-filter'
+            type='text'
+            bsSize='sm'
+            id='search-input'
+            onChange={handleFilter}
+          />
+        </Col>
+        <Col sm='3'></Col>
+        <Col sm='3'>
+          <button className='btn btn-primary mt-2' onClick={toggle}>
+            +Agregar
+          </button>
+        </Col>
+
+      </Row>
+
       <UserForm
         toggle={toggle}
         modal={modal}
@@ -143,9 +226,9 @@ const Users = () => {
         isNewUser={!actualizacion && !actualizacionPass}
         showPasswordInput={actualizacionPass}
       />
-      <UserFormPass 
-        togglePass = {togglePass}
-        modalPass = {modalPass}
+      <UserFormPass
+        togglePass={togglePass}
+        modalPass={modalPass}
         handleSubmit={handleSubmit}
         register={register}
         reset={reset}
@@ -153,6 +236,8 @@ const Users = () => {
       />
       <UserTable
         data={data}
+        filter={filter}
+        search={search}
         actualizaUsuariosId={actualizaUsuariosId}
         actualizarPassId={actualizarPassId}
       />

@@ -21,6 +21,8 @@ const VerticalLayout = (props) => {
     filteredNavigation = [navigation[1], navigation[6]]
   } else if (rol === "1") {
     filteredNavigation = navigation;
+  }else if (rol == "4") {
+    filteredNavigation = [navigation[1], navigation[2],navigation[5]];
   }
   // else if (rol === "8" || rol === "6" === rol == "5" || rol === "4" === rol === "3" || rol === "2") {
   //   filteredNavigation = [navigation[0]]

@@ -1,7 +1,7 @@
 
 import React, { Fragment, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Breadcrumb, Col, Card, Row, Button } from 'reactstrap'
+import { Breadcrumb, Col, Card, Row, Button, Label, Input } from 'reactstrap'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 import bdMuni from '../../api/bdMuni';
@@ -14,9 +14,12 @@ const Noticias = () => {
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('idu');
   const [modal, setModal] = useState(false)
+  const [refresh, setRefresh] = useState(false)
   const [estado, setEstado] = useState(false)
   const [objUpdate, setObjUpdate] = useState()
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState()
+  const [filter, setFilter] = useState()
   const [getData, setGetData] = useState()
   const [currentPage, setCurrentPage] = useState(1);
   const { handleSubmit, control, register, reset, setError, formState: { errors } } = useForm()
@@ -32,7 +35,7 @@ const Noticias = () => {
   const [formArrayBack, setFormArrayBack] = useState([])
   const [count, setCount] = useState(1)
   const increaseCount = () => {
-    setFormArray([...formArray, { imagen: ''}]);
+    setFormArray([...formArray, { imagen: '' }]);
     setCount(count + 1)
   }
 
@@ -66,7 +69,8 @@ const Noticias = () => {
       }
     })
       .then(res => {
-        setEstado(true)
+        // setEstado(true)
+        setRefresh(!refresh)
         setFormArray([])
         reset(defaultValuesForm)
         Swal.fire({
@@ -96,7 +100,8 @@ const Noticias = () => {
       }
     })
       .then(res => {
-        setEstado(true)
+        // setEstado(true)
+        setRefresh(!refresh)
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -127,7 +132,7 @@ const Noticias = () => {
         const arrayImagenes = []
         imagenes?.map((item) => {
           // arrayImagenes.push(item.imagen)
-          arrayImagenes.push({'imagen': item?.imagen})
+          arrayImagenes.push({ 'imagen': item?.imagen })
         })
         setFormArray(arrayImagenes)
         setObjUpdate(res?.data)
@@ -139,11 +144,11 @@ const Noticias = () => {
       })
   }
   const submit = (data) => {
-    
+
     const imagenes = formArray.map((element) => element.imagen);
     data.imagen = imagenes
     data.user_id = userId
-    
+
     if (objUpdate !== undefined) {
       updateNoticia(objUpdate?.id, data)
       reset(defaultValuesForm)
@@ -156,39 +161,67 @@ const Noticias = () => {
     }
   }
   useEffect(() => {
-    const perPage = 10;
 
-    bdMuni.get(`/v1/noticia`,
+    bdMuni.get(`/v1/noticias-intra`,
       {
         headers: {
           'Authorization': 'Bearer ' + token
         }
       })
       .then(res => {
-        setGetData(res.data.data)
+        setGetData(res.data)
       })
       .catch(err => {
 
       })
-  }, [estado, currentPage])
+  }, [refresh])
+
+  const handleFilter = (e) => {
+    setSearch(e.target.value);
+  };
+
+  useEffect(() => {
+    setFilter(getData?.filter(e =>
+    (e.titulo && e.nota &&
+      (e.titulo.toLowerCase() + ' ' + e.nota.toLowerCase()).indexOf(search?.toLowerCase()) !== -1)
+    ))
+  }, [search])
 
   return (
     <Fragment>
-      <Card className='p-4'>
+      <Card className='p-2'>
         <Row>
-          <Col lg='6' className='d-flex align-items-center px-0 px-lg-1'>
-            <Button className='mt-sm-0 mt-1' color='primary' onClick={toggle}>
+        <Col md="3">
+            <Label className='' for='search-input'>
+              Buscar
+            </Label>
+            <Input
+              className='dataTable-filter'
+              type='text'
+              bsSize='sm'
+              id='search-input'
+              placeholder='buscar por titulo o nota'
+              onChange={handleFilter}
+            />
+          </Col>
+          <Col md="3">
+          </Col>
+          <Col md='3'>
+            <Button className='mt-2' color='primary' onClick={toggle}>
               Registrar Noticia
             </Button>
           </Col>
+         
+         
         </Row>
-    
+
       </Card>
       <TablaNoticias
         updateNoticiaById={updateNoticiaById}
         getData={getData}
         estado={estado}
-
+        filter={filter}
+        search={search}
       />
 
       <FormNoticia

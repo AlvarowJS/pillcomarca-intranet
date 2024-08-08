@@ -2,7 +2,10 @@ import React from 'react';
 import DataTable from 'react-data-table-component';
 import { Edit, Edit2, Trash } from 'react-feather';
 
-const UserTable = ({ data, actualizaUsuariosId, actualizarPassId }) => {
+const UserTable = ({ 
+  data, actualizaUsuariosId, actualizarPassId,
+  filter, search
+}) => {
   const columns = [
     {
       sortable: true,
@@ -77,7 +80,7 @@ const UserTable = ({ data, actualizaUsuariosId, actualizarPassId }) => {
       pagination
       className='react-datatable'
       columns={columns}
-      data={data}
+      data={search ? filter : data}
     />
   );
 }
