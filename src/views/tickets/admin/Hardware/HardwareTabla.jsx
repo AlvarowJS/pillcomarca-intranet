@@ -3,7 +3,7 @@ import DataTable from 'react-data-table-component'
 import { ChevronDown, Edit } from 'react-feather'
 
 const HardwareTabla = ({
-  data, actualizarHardwareId
+  data, actualizarHardwareId, getData, search, filter
 }) => {
   // Columnas
   const columns = [
@@ -48,19 +48,41 @@ const HardwareTabla = ({
       sortable: true,
       name: 'Especificaciones',
       minWidth: '175px',
-      selector: row => row.especif
+      selector: row => row.especif,
+      cell: row => {
+        return (
+          <>
+          <p>{row?.especif}</p>
+          </>
+        )
+      }
+        
     },
     {
       sortable: true,
       name: 'Cod Patrimonial',
       minWidth: '175px',
-      selector: row => row?.cod_patri
+      selector: row => row?.cod_patri,
+      cell: row => {
+        return (
+          <>
+              <p>{row?.cod_patri}</p>
+          </>
+        )
+      }
     },
     {
       sortable: true,
       name: 'Dependencia',
       minWidth: '175px',
-      selector: row => row?.dependencia?.nombre_dependencia
+      selector: row => row?.dependencia?.nombre_dependencia,
+      cell: row => {
+        return (
+            <>
+                <p>{row?.dependencia?.nombre_dependencia}</p>
+            </>
+        )
+    }
     },
     {
       sortable: true,
@@ -93,7 +115,7 @@ const HardwareTabla = ({
         className='react-dataTable'
         columns={columns}
         sortIcon={<ChevronDown size={10} />}
-        data={data}
+        data={search ? filter : data}
       />
     </div>
   )
