@@ -22,6 +22,7 @@ import RegistroVisitas from "../../views/registroVisitas/RegistroVisitas";
 import Convocatoria from "../../views/convocatoria/Convocatoria";
 import Intervencion from "../../views/intervencion/Intervencion";
 import Directorio from "../../views/directorio/Directorio";
+import Portada from "../../views/portada/Portada";
 import Hardware from "../../views/tickets/admin/Hardware/Hardware";
 import Poi from "../../views/poi/Poi";
 import Dashboard from "../../views/dashboard/Dashboard";
@@ -192,6 +193,11 @@ const Routes = [
   {
     path: "/directorio",
     element: <AuthGuard><Directorio /></AuthGuard>,
+
+  },
+  {
+    path: "/portada",
+    element: <AuthGuard><Portada /></AuthGuard>,
 
   },
   {

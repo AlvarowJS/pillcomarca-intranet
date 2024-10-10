@@ -1,9 +1,8 @@
 import React from 'react'
 import DataTable from 'react-data-table-component'
 import { Edit, Trash } from 'react-feather'
-import { Card } from 'reactstrap'
 const TablaNormativa = ({
-    data, actualizarNormativaId, eliminarNormativa
+    data, actualizarNormativaId, eliminarNormativa, search, filter
 }) => {
     const columns = [
         {
@@ -19,7 +18,13 @@ const TablaNormativa = ({
             name: 'Nombres',
             minWidth: '20%',
             selector: row => row?.nombre,
-            cell: row => <div>{row?.nombre}</div>
+            cell: row => {
+                return (
+                    <>
+                    <div>{row?.nombre}</div>
+                    </>
+                )
+            }
         },
         {
             sortable: true,
@@ -76,16 +81,17 @@ const TablaNormativa = ({
 
 
 return (
-    <Card className='mt-2'>
+    <div className='react-dataTable'>
         <DataTable
             noHeader
             pagination
             className='react-datatable'
             columns={columns}
-            data={data}
+            sortIcon={<Edit size={10} />}
+            data={search ? filter : data}
 
         />
-    </Card>
+    </div>
 )
 }
 
