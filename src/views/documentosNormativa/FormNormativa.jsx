@@ -6,6 +6,7 @@ const FormNormativa = ({
     toggle,
     modal,
     handleSubmit,
+    toggleActualizacion,
     submit,
     register,
     reset, getAuthHeaders
