@@ -9,7 +9,7 @@ import withReactContent from 'sweetalert2-react-content';
 
 const MySwal = withReactContent(Swal);
 const URL = 'v1/portada';
-const URLPORTADA = 'v1/update-portada';
+const URLPORTADA = 'v1/portada-update';
 const URLINDEX = 'v1/portada-all';
 
 const Portada = () => {
@@ -96,12 +96,12 @@ const Portada = () => {
 
     const actualizarPortada = (id, formData) => {
         const f = new FormData();
-        f.append('id', formData.id);
+        f.append('id', id);
         f.append('nombre_portada', formData.nombre_portada);
         f.append('foto', foto);
         f.append('estado', formData.estado);
         f.append('user_id', formData.user_id);
-        bdMuni.post(`${URLPORTADA}/${id}`, f, getAuthHeaders())
+        bdMuni.post(`${URLPORTADA}`, f, getAuthHeaders())
             .then(res => {
                 reset(defaulValuesForm);
                 toggle();
@@ -201,7 +201,7 @@ const Portada = () => {
                 <Col sm='2' className='dataTable-filter'>
 
                     <Button onClick={toggle} color='primary'>
-                        Cargar imagen
+                        Registar portada
                     </Button>
                 </Col>
             </Row>
