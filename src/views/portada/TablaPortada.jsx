@@ -29,7 +29,7 @@ const TablaPortada = ({
             selector: row => row?.foto,
             cell: row => (
                 row?.foto ? (
-                    <img src={`http://127.0.0.1:8000/storage/fotosPortada/${row?.foto}`} 
+                    <img src={`https://sv-yptplguxwm.cloud.elastika.pe/storage/fotosPortada/${row?.foto}`} 
                     width={100} height={100} target="_blank" rel="noopener noreferrer"/>
                         
                 ) : (
