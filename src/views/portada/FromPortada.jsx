@@ -24,14 +24,7 @@ const FromPortada = ({
                             className="form-control"
                             type="text"
                             placeholder='Ingrese el nombre'
-                            {...register('nombre_portada')}
-                        />
-                    </div>
-                    <div className="form-group mx-4 mb-2">
-                        <label htmlFor="foto">Foto</label>
-                        <input type="file" className="form-control" id="foto"
-                            {...register('foto')}
-                            onChange={handleFileChange}
+                            {...register('nombre_portada', { required: true })}
                         />
                     </div>
                     <div className='form-group my-2'>
@@ -45,7 +38,7 @@ const FromPortada = ({
                         </select>
                     </div>
                     <div className='form-group my-2'>
-                        <label>Enlace del Imagen - obcional</label>
+                        <label>Enlace del Imagen - Opcional</label>
                         <input
                             className="form-control"
                             type="text"
@@ -53,29 +46,11 @@ const FromPortada = ({
                             {...register('enlace', { required: false })}
                         />
                     </div>
-                    <div className='form-group my-2'>
-                        <label>Usuario ID</label>
-                        <input
-                            className="form-control"
-                            type="number"
-                            placeholder='Ingrese el ID del usuario'
-                            {...register('user_id', { required: true })}
-                        />
-                    </div>
-                    <div className='form-group my-2'>
-                        <label>Fecha creado</label>
-                        <input
-                            className="form-control"
-                            type="date"
-                            {...register('created_at', { required: true })}
-                        />
-                    </div>
-                    <div className='form-group my-2'>
-                        <label>Fecha de Actualización</label>
-                        <input
-                            className="form-control"
-                            type="date"
-                            {...register('updated_at', { required: true })}
+                    <div className="form-group mx-4 mb-2">
+                        <label htmlFor="foto">Foto</label>
+                        <input type="file" className="form-control" id="foto"
+                            {...register('foto', { required: true })}
+                            onChange={handleFileChange}
                         />
                     </div>
                     <button className='btn btn-primary mb-2' type="submit">
