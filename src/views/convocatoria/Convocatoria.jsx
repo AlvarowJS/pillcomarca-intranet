@@ -22,12 +22,15 @@ const Convocatoria = () => {
     const [data, setData] = useState()
 
     const [modal, setModal] = useState()
-    const [modalResultados, setModalResultados] = useState()
-    const [modalBases, setModalBases] = useState()
-    const [modalCurricular, setModalCurricular] = useState()
+    const [modalResultados, setModalResultados] = useState(false)
+    const [modalBases, setModalBases] = useState(false)
+    const [modalCurricular, setModalCurricular] = useState(false)
 
     const [actualizacion, setActualizacion] = useState(false)
     const { handleSubmit, register, reset } = useForm()
+    const { handleSubmit: handleSubmitBases, register: registerBases, reset: resetBases } = useForm()
+    const { handleSubmit: handleSubmitCurricular, register: registerCurricular, reset: resetCurricular } = useForm()
+    const { handleSubmit: handleSubmitResultados, register: registerResultados, reset: resetResultados } = useForm()
     const [refresh, setRefresh] = useState(false)
 
     const getAuthHeaders = () => ({
@@ -42,14 +45,22 @@ const Convocatoria = () => {
     }
 
     const toggleBases = () => {
-        setModalBases(!modalBases)
+        setActualizacion(false)
+        resetBases(defaultBases);
+        setModalBases(!modalBases);
     }
 
+    // console.log(modalBases)
+
     const toggleCurricular = () => {
-        setModalCurricular(modalCurricular)
+        setActualizacion(false)
+        setModalCurricular(!modalCurricular)
+        resetCurricular(defaultCurricular)
     }
     const toggleResultados = () => {
+        setActualizacion(false)
         setModalResultados(!modalResultados)
+        resetResultados(defaultResultados)
     }
 
     const toggleActualizacion = () => {
@@ -87,7 +98,7 @@ const Convocatoria = () => {
             })
     }, [refresh])
 
-    
+
     // Crear convocatoria
     const crearConvocatoria = (data) => {
         bdMuni.post(URL, data, getAuthHeaders())
@@ -98,7 +109,7 @@ const Convocatoria = () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Consultorio creado',
+                    title: 'Convocatoria creado',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -112,13 +123,12 @@ const Convocatoria = () => {
                 })
             })
     }
-
     // Crear Base
     const crearBase = (data) => {
         bdMuni.post(URLBASES, data, getAuthHeaders())
             .then(res => {
                 reset(defaultBases)
-                toggleBases.call()
+                toggleBases()
                 setRefresh(!refresh)
                 Swal.fire({
                     position: 'center',
@@ -137,8 +147,55 @@ const Convocatoria = () => {
                 })
             })
     }
+    // Crear Curricular
+    const crearCurricular = (data) => {
+        bdMuni.post(URLCURRICULAR, data, getAuthHeaders())
+            .then(res => {
+                reset(defaultCurricular)
+                toggleCurricular.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Curriculares creados',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
+    //Crear Resultados
+    const crearResultados = (data) => {
+        bdMuni.post(URLRESULTADOS, data, getAuthHeaders())
+            .then(res => {
+                reset(defaultResultados)
+                toggleResultados.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Resultados creados',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
 
-    // Crear 
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
     // Actualiza Consultorio (PUT)
     const actualizarConvocatoria = (id, data) => {
         bdMuni.put(`${URL}/${id}`, data, getAuthHeaders())
@@ -149,7 +206,7 @@ const Convocatoria = () => {
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
-                    title: 'Consultorio Actualizado',
+                    title: 'Convocatoria Actualizado',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -183,7 +240,7 @@ const Convocatoria = () => {
                         Swal.fire({
                             position: 'center',
                             icon: 'success',
-                            title: 'Consultorio Eliminado',
+                            title: 'Convocatoria Eliminado',
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -222,30 +279,144 @@ const Convocatoria = () => {
         }
     }
 
+    const actualizarBases = (id, data) => {
+        bdMuni.put(`${URLBASES}/${id}`, data, getAuthHeaders())
+            .then(res => {
+                reset(defaultBases)
+                toggleBases.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Base Actualizado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
+
     const submitBases = (data) => {
-        crearBase(data)
+        if (actualizacion) {
+            actualizarBases(data.id, data)
+        } else {
+            crearBase(data)
+        }
+    }
+
+    const actualizarCurricular = (id, data) => {
+        bdMuni.put(`${URLCURRICULAR}/${id}`, data, getAuthHeaders())
+            .then(res => {
+                reset(defaultCurricular)
+                toggleCurricular.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Curricular Actualizado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
+    const submitCurricular = (data) => {
+        if (actualizacion) {
+            actualizarCurricular(data.id, data)
+
+        } else {
+            crearCurricular(data)
+        }
+    }
+
+    const actualizarResultado = (id, data) => {
+        bdMuni.put(`${URLRESULTADOS}/${id}`, data, getAuthHeaders())
+            .then(res => {
+                reset(defaultResultados)
+                toggleResultados.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Curricular Actualizado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
+
+    const submitResultados = (data) => {
+        if (actualizacion) {
+            actualizarResultado(data.id, data)
+        } else {
+            crearResultados(data)
+        }
     }
     return (
         <>
             <Row>
                 <Col>
-                    <Button
-                        color='warning'
-                        onClick={toggle}
-                    >Crear Proceso</Button>
+                    <Button color="info" onClick={toggle}>
+                        Crear Proceso
+                    </Button>
                 </Col>
                 <Col>
-                    <Button>Subir Base</Button>
+                    <Button color="primary" onClick={toggleBases}>
+                        Subir Base
+                    </Button>
                 </Col>
                 <Col>
-                    <Button>Subir Evaluación Curricular</Button>
+                    <Button color="info" onClick={toggleCurricular}>
+                        Subir Evaluación Curricular
+                    </Button>
                 </Col>
                 <Col>
-                    <Button>Subir Resultado Final</Button>
+                    <Button color="success" onClick={toggleResultados}>
+                        Subir Resultado Final
+                    </Button>
                 </Col>
             </Row>
             <TablaConvocatoria
                 data={data}
+                actualizarConvocatoriaId={actualizarConvocatoriaId}
+                toggleBases={toggleBases}
+                bdMuni={bdMuni}
+                URLBASES={URLBASES}
+                resetBases={resetBases}
+                getAuthHeaders={getAuthHeaders}
+                actualizacion={actualizacion}
+                setActualizacion={setActualizacion}
+
+                toggleCurricular={toggleCurricular}
+                URLCURRICULAR={URLCURRICULAR}
+                resetCurricular={resetCurricular}
+
+                toggleResultados={toggleResultados}
+                resetResultados={resetResultados}
+                URLRESULTADOS={URLRESULTADOS}
+
             />
             <FormConvocatoria
                 toggle={toggle}
@@ -258,14 +429,38 @@ const Convocatoria = () => {
                 getAuthHeaders={getAuthHeaders}
             />
 
-            {/* <FormBases
-            
+            <FormBases
+                options={data}
+                toggleBases={toggleBases}
+                modalBases={modalBases}
+                handleSubmitBases={handleSubmitBases}
+                submitBases={submitBases}
+                registerBases={registerBases}
+                resresetBaseser={resetBases}
+                getAuthHeaders={getAuthHeaders}
+
             />
             <FormCurricular
-               
-                
+                tipos={data}
+                toggleCurricular={toggleCurricular}
+                modalCurricular={modalCurricular}
+                handleSubmitCurricular={handleSubmitCurricular}
+                submitCurricular={submitCurricular}
+                registerCurricular={registerCurricular}
+                resetCurricular={resetCurricular}
+                getAuthHeaders={getAuthHeaders}
+
             />
-            <FormResultado /> */}
+            <FormResultado
+                tipos={data}
+                toggleResultados={toggleResultados}
+                modalResultados={modalResultados}
+                handleSubmitResultados={handleSubmitResultados}
+                submitResultados={submitResultados}
+                registerResultados={registerResultados}
+                resetResultados={resetResultados}
+                getAuthHeaders={getAuthHeaders}
+            />
         </>
     )
 }

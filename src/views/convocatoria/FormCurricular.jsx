@@ -2,44 +2,36 @@ import React, { useEffect, useState } from 'react'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
 
 const FormCurricular = ({
-  modal, toggle, handleSubmit, register, submit,
+  tipos, toggleCurricular, handleSubmitCurricular, registerCurricular, submitCurricular, modalCurricular
 }) => {
-  const [tipos, setTipos] = useState()
-  useEffect(() => {
-    bdMuni.get(URL, getAuthHeaders())
-      .then(res => {
-        setTipos(res.data)
-      })
-      .catch(err => { })
 
-  }, [])
   return (
-    <Modal isOpen={modal} toggle={toggle} size='lg'>
+    <Modal isOpen={modalCurricular} toggle={toggleCurricular} size='lg'>
       <ModalHeader>
-        Registrar Convocatoria
+        Registrar evaluación curricular
       </ModalHeader>
       <ModalBody>
-        <form onSubmit={handleSubmit(submit)}>
+        <form onSubmit={handleSubmitCurricular(submitCurricular)}>
           <div className='form-group my-2'>
             <label htmlFor="">
-              Nombre
+              Nombre del archivo
             </label>
             <input
               className="form-control"
               type="text"
               placeholder='ingrese nombres'
-              {...register('nombre')}
+              {...registerCurricular('nombre', { required: true })}
             />
           </div>
           <div className='form-group my-2'>
             <label htmlFor="">
-              Archivo
+            Enlace de Archivo
             </label>
             <input
               className="form-control"
               type="text"
               placeholder='ingrese el archivo'
-              {...register('archivo')}
+              {...registerCurricular('archivo', { required: true })}
             />
           </div>
 
@@ -47,7 +39,9 @@ const FormCurricular = ({
             <label htmlFor="">
               Escoge la convocatoria
             </label>
-            <select className="form-select" id="convocatoria_id" {...register("convocatoria_id")}>
+            <select className="form-select"
+              id="convocatoria_id"
+              {...registerCurricular("convocatoria_id", { required: true })}>
               {
                 tipos?.map(tipo => (
                   <option key={tipo.id} value={tipo.id}>{tipo.nombre} </option>

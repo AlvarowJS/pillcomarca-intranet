@@ -2,25 +2,18 @@ import React, { useEffect, useState } from 'react'
 import { Modal, ModalBody, ModalHeader } from 'reactstrap'
 import bdMuni from '../../api/bdMuni'
 const FormBases = ({
-    data, toggleBases, modalBases, submitBases, handleSubmit,
-    reset, register, getAuthHeaders
+    options, toggleBases, modalBases, submitBases, handleSubmitBases,
+    reset, registerBases, getAuthHeaders
 }) => {
 
-    const [options, setOptions] = useState()
-    useEffect(() => {
-        bdMuni.get(URL, getAuthHeaders())
-            .then(res => {
-                setOptions(res.data)
-            })
-            .catch(err => console.log(err))
-    }, [])
+
     return (
         <Modal isOpen={modalBases} toggle={toggleBases} size='lg'>
             <ModalHeader>
                 Registrar Base
             </ModalHeader>
             <ModalBody>
-                <form onSubmit={handleSubmit(submitBases)}>
+                <form onSubmit={handleSubmitBases(submitBases)}>
                     <div className='form-group my-2'>
                         <label htmlFor="">
                             Nombre del Archivo
@@ -29,7 +22,7 @@ const FormBases = ({
                             className="form-control"
                             type="text"
                             placeholder='ingrese nombres'
-                            {...register('nombre')}
+                            {...registerBases('nombre', { required: true })}
                         />
                     </div>
                     <div className='form-group my-2'>
@@ -40,7 +33,7 @@ const FormBases = ({
                             className="form-control"
                             type="text"
                             placeholder='ingrese nombres'
-                            {...register('archivo')}
+                            {...registerBases('archivo', { required: true })}
                         />
                     </div>
                     <div className='form-group my-2'>
@@ -50,7 +43,7 @@ const FormBases = ({
                         <select
                             className="form-select"
                             id="convocatoria_id"
-                            {...register("convocatoria_id")}
+                            {...registerBases("convocatoria_id", { required: true })}
                         >
                             {options?.map((option) => (
                                 <option key={option.id} value={option.id}>

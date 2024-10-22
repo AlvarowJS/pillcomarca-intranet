@@ -18,7 +18,7 @@ const FormConvocatoria = ({
                             className="form-control"
                             type="text"
                             placeholder='ingrese nombres'
-                            {...register('nombre')}
+                            {...register('nombre', { required: true })}
                         />
                     </div>
                     <div className='form-group my-2'>
@@ -28,7 +28,7 @@ const FormConvocatoria = ({
                         <select
                             className="form-select"
                             id="ubicacion_id"
-                            {...register("estado")}
+                            {...register("estado", { required: true })}
                         >
                             <option value="activo">Activo</option>
                             <option value="concluido">Concluido</option>
