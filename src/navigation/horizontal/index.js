@@ -1,4 +1,4 @@
-import { PieChart, Clipboard, FileText, File, Globe, Edit, CheckCircle, Briefcase, Phone, FolderPlus, Users, UserCheck } from "react-feather";
+import { PieChart, Clipboard, FileText, File, Globe, Edit, CheckCircle, Briefcase, Phone, FolderPlus, Users, UserCheck, Shield } from "react-feather";
 
 export default [
   {
@@ -66,6 +66,12 @@ export default [
     title: "Portada",
     icon: <FolderPlus size={20} />,  // Representa una portada o una carpeta destacada.
     navLink: "/portada",
+  },
+  {
+    id: "Seguridad ciudadana",
+    title: "Seguridad ciudadana",
+    icon: <Shield size={20} />,  // Representa seguridad y protección.
+    navLink: "/seguridad-ciudadana",
   },
   {
     id: "Usuarios",

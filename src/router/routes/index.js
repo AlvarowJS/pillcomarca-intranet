@@ -23,6 +23,7 @@ import Convocatoria from "../../views/convocatoria/Convocatoria";
 import Intervencion from "../../views/intervencion/Intervencion";
 import Directorio from "../../views/directorio/Directorio";
 import Portada from "../../views/portada/Portada";
+import SeguridadCiudadana from "../../views/seguridadCiudadana/SeguridadCiudadana";
 import Hardware from "../../views/tickets/admin/Hardware/Hardware";
 import Poi from "../../views/poi/Poi";
 import Dashboard from "../../views/dashboard/Dashboard";
@@ -199,6 +200,10 @@ const Routes = [
     path: "/portada",
     element: <AuthGuard><Portada /></AuthGuard>,
 
+  },
+  {
+    path: "/seguridad-ciudadana",
+    element: <AuthGuard><SeguridadCiudadana /></AuthGuard>,
   },
   {
     path: "/users",
