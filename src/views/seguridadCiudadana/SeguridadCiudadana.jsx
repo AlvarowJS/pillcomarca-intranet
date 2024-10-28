@@ -10,6 +10,7 @@ import bdMuni from '../../api/bdMuni';
 import FormColeccion from './FormColeccion'
 import FormArchivos from './FormArchivos'
 
+const URLPUBLICA = '/v1/seguridad'
 const URL = '/v1/seguridad-categoria'
 const URLCOLECCION = '/v1/seguridad-coleccion'
 const URLARCHIVOS = '/v1/seguridad-archivo'
@@ -19,7 +20,7 @@ const SeguridadCiudadana = () => {
     const userId = localStorage.getItem('idu');
 
     const [data, setData] = useState()
-
+    const [dataColeccion, setDataColeccion] = useState()
     const [modal, setModal] = useState()
     const [modalColeccion, setModalColeccion] = useState(false)
     const [modalArchivos, setModalArchivos] = useState(false)
@@ -55,10 +56,20 @@ const SeguridadCiudadana = () => {
         setModal(!modal)
     }
 
+
     useEffect(() => {
-        bdMuni.get(`${URL}`, getAuthHeaders())
+        bdMuni.get(`${URLPUBLICA}`, getAuthHeaders())
             .then(res => {
                 setData(res.data)
+            })
+            .catch(err => {
+
+            })
+    }, [refresh])
+    useEffect(() => {
+        bdMuni.get(`${URLCOLECCION}`, getAuthHeaders())
+            .then(res => {
+                setDataColeccion(res.data)
             })
             .catch(err => {
 
@@ -184,6 +195,53 @@ const SeguridadCiudadana = () => {
             })
             .catch(err => null)
     }
+    // Actualizar Coleccion
+    const actualizarColeccion = (id, data) => {
+        bdMuni.put(`${URLCOLECCION}/${id}`, data, getAuthHeaders())
+            .then(res => {
+                resetColeccion(defaultColeccion)
+                toggleColeccion.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Coleccion Actualizado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
+    const actualizarArchivos = (id, data) => {
+        bdMuni.put(`${URLARCHIVOS}/${id}`, data, getAuthHeaders())
+            .then(res => {
+                resetArchivos(defaultArchivos)
+                toggleArchivo.call()
+                setRefresh(!refresh)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Archivo Actualizado',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch(err => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Contacte con soporte',
+                    showConfirmButton: false,
+                })
+            })
+    }
 
     const submit = (data) => {
 
@@ -216,12 +274,12 @@ const SeguridadCiudadana = () => {
                     </Button>
                 </Col>
                 <Col>
-                    <Button onClick={toggleColeccion}>
+                    <Button color="primary" onClick={toggleColeccion}>
                         Crear Colección
                     </Button>
                 </Col>
                 <Col>
-                    <Button onClick={toggleArchivo}>
+                    <Button color="success" onClick={toggleArchivo}>
                         Crear Archivos
                     </Button>
                 </Col>
@@ -229,6 +287,18 @@ const SeguridadCiudadana = () => {
             <TablaSeguridadCiudadana
                 data={data}
                 actualizarSeguridadCiudadanaId={actualizarSeguridadCiudadanaId}
+                toggleColeccion={toggleColeccion}
+
+                bdMuni={bdMuni}
+                URLCOLECCION={URLCOLECCION}
+                resetColeccion={resetColeccion}
+                getAuthHeaders={getAuthHeaders}
+                setActualizacion={setActualizacion}
+                actualizacion={actualizacion}
+                
+                toggleArchivo={toggleArchivo}
+                URLARCHIVOS={URLARCHIVOS}
+                resetArchivos={resetArchivos}
             />
             <FormSeguridadCiudadana
                 toggle={toggle}
@@ -251,7 +321,7 @@ const SeguridadCiudadana = () => {
                 getAuthHeaders={getAuthHeaders}
             />
             <FormArchivos
-                options={data}
+                coleccion={dataColeccion}
                 toggleArchivo={toggleArchivo}
                 modalArchivos={modalArchivos}
                 handleSubmitArchivos={handleSubmitArchivos}
