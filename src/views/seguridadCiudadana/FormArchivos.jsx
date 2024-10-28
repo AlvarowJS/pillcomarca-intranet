@@ -3,7 +3,7 @@ import { Modal, ModalBody, ModalHeader } from 'reactstrap';
 
 const FormArchivos = ({
     modalArchivos, toggleArchivo, handleSubmitArchivos, submitArchivos,
-    registerArchivos, options
+    registerArchivos, coleccion
 }) => {
     return (
         <Modal isOpen={modalArchivos} toggle={toggleArchivo} size='lg'>
@@ -19,7 +19,7 @@ const FormArchivos = ({
                         <input
                             className="form-control"
                             type="text"
-                            placeholder='Ingrese categoria'
+                            placeholder='Nombre del archivo'
                             {...registerArchivos('nombre_archivo', { required: true })}
                         />
                     </div>
@@ -30,7 +30,7 @@ const FormArchivos = ({
                         <input
                             className="form-control"
                             type="text"
-                            placeholder='Ingrese categoria'
+                            placeholder='Ingrese el enlace documento'
                             {...registerArchivos('documento', { required: true })}
                         />
                     </div>
@@ -43,9 +43,9 @@ const FormArchivos = ({
                             id="seguridad_coleccion_id"
                             {...registerArchivos("seguridad_coleccion_id", { required: true })}
                         >
-                            {options?.map((option) => (
+                            {coleccion?.map((option) => (
                                 <option key={option.id} value={option.id}>
-                                    {option.categoria}
+                                    {option.nombre_coleccion}
                                 </option>
                             ))}
                         </select>

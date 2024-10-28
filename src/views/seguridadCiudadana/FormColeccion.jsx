@@ -14,12 +14,12 @@ const FormColeccion = ({
                 <form onSubmit={handleSubmitColeccion(submitColeccion)}>
                     <div className='form-group my-2'>
                         <label htmlFor="">
-                            Nombre
+                            Nombre de coleccion
                         </label>
                         <input
                             className="form-control"
                             type="text"
-                            placeholder='Ingrese categoria'
+                            placeholder='Nombre de coleccion'
                             {...registerColeccion('nombre_coleccion', { required: true })}
                         />
                     </div>

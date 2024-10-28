@@ -5,8 +5,8 @@ import { Card } from 'reactstrap'
 
 const TablaConvocatoria = ({
     data, actualizarConvocatoriaId, bases,
-    toggleBases, URLBASES, bdMuni,
-    resetBases, getAuthHeaders, actualizacion, setActualizacion,
+    toggleBases, URLBASES, bdMuni, resetBases,
+    getAuthHeaders, actualizacion, setActualizacion,
     toggleCurricular, URLCURRICULAR, resetCurricular,
     toggleResultados, URLRESULTADOS, resetResultados
 }) => {
@@ -25,20 +25,20 @@ const TablaConvocatoria = ({
         toggleCurricular.call()
         setActualizacion(!actualizacion)
         bdMuni.get(`${URLCURRICULAR}/${id}`, getAuthHeaders())
-        .then(res => {
-            resetCurricular(res.data)
-        })
-        .catch(err => null)
+            .then(res => {
+                resetCurricular(res.data)
+            })
+            .catch(err => null)
     }
-    
+
     const actualizarResultadoId = (id) => {
         toggleResultados.call()
         setActualizacion(!actualizacion)
         bdMuni.get(`${URLRESULTADOS}/${id}`, getAuthHeaders())
-        .then(res => {
-            resetResultados(res.data)
-        })
-        .catch(err => null)
+            .then(res => {
+                resetResultados(res.data)
+            })
+            .catch(err => null)
     }
     const ExpandedComponent = ({ data }) => {
         return (
