@@ -49,7 +49,7 @@ const FromPortada = ({
                     <div className="form-group mx-4 mb-2">
                         <label htmlFor="foto">Foto</label>
                         <input type="file" className="form-control" id="foto"
-                            {...register('foto', { required: true })}
+                            {...register('foto', { required: false })}
                             onChange={handleFileChange}
                         />
                     </div>
