@@ -32,7 +32,7 @@ const FromPortada = ({
                         <select
                             className="form-control"
                             {...register('estado', { required: true })}
-                        >
+                        >                            
                             <option value="1">Activo</option>
                             <option value="0">Inactivo</option>
                         </select>
@@ -43,7 +43,7 @@ const FromPortada = ({
                             className="form-control"
                             type="text"
                             placeholder='Ingrese el enlace'
-                            {...register('enlace', { required: false })}
+                            // {...register('enlace', { required: false })}
                         />
                     </div>
                     <div className="form-group mx-4 mb-2">
